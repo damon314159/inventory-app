@@ -1,5 +1,5 @@
 {
-  "name": "template-express-mono",
+  "name": "inventory-app",
   "version": "0.0.0",
   "description": "",
   "files": [
@@ -14,7 +14,7 @@
     "build": "gulp build",
     "prebuild": "npm run lint -s && { echo \"\n\"; npm run format -s; }",
     "watch": "gulp watchSrc",
-    "lint": "eslint --fix \"**/*.{js,ts}\" && echo \"\\033[32mNo Lint Errors\\033[0m\"",
+    "lint": "eslint --fix \"**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}\" && echo \"\\033[32mNo Lint Errors\\033[0m\"",
     "format": "echo \"Files formatted:\"; prettier -w **/* -l && echo \"\n\\033[32mFormatting Complete\\033[0m\""
   },
   "dependencies": {
