@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "strict": true,
+    "target": "ESNext",
+    "types": ["node"],
+    "removeComments": true,
+    "outDir": "dist"
+  },
+  "typeRoots": ["./node_modules/@types", ".src/types"],
+  "exclude": ["node_modules", "dist", "src/frontend/**/*"],
+  "include": ["src/**/*"]
+}
