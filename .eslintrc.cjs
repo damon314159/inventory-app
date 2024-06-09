@@ -47,6 +47,7 @@ module.exports = {
     'unicorn/prefer-node-protocol': 'error',
     '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/no-confusing-void-expression': 'error',
+    '@typescript-eslint/prefer-for-of': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
   },
   overrides: [
