@@ -1,0 +1,25 @@
+// Uses DBML to describe the schema
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table category {
+  id integer [primary key]
+  name varchar(255)
+  description varchar(255)
+  url varchar(255)
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table item {
+  id integer [primary key]
+  name varchar(255)
+  description varchar(255)
+  url varchar(255)
+  price integer
+  stock integer
+  category_id integer
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: Categories.id < Items.category_id
