@@ -2,4 +2,7 @@
 node_modules
 temp
 dist
-assets
+*png
+*svg
+*jpg
+*dbml
