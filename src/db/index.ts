@@ -1,4 +1,7 @@
 import pg, { type Pool } from 'pg'
+import createQuery from './accessors/query.js'
+import createGetClient from './accessors/getClient.js'
+import type { GetClient, Query } from '../types/index.js'
 
 const pool: Pool = new pg.Pool({
   user: process.env.DB_USER,
@@ -8,4 +11,7 @@ const pool: Pool = new pg.Pool({
   database: process.env.DB_NAME ?? 'inventory_app',
 })
 
-export { pool }
+const query: Query = createQuery(pool)
+const getClient: GetClient = createGetClient(pool)
+
+export { pool, query, getClient }
