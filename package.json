@@ -14,7 +14,7 @@
     "build": "gulp build",
     "prebuild": "npm run lint -s && { echo \"\n\"; npm run format -s; }",
     "watch": "gulp watchSrc",
-    "migrations": "node --env-file=.env --import=./register.js db/setup.ts -s",
+    "migrations": "node --env-file=.env --import=./register.js src/db/setup.ts -s",
     "lint": "eslint --fix \"**/*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}\" && echo \"\\033[32mNo Lint Errors\\033[0m\"",
     "format": "echo \"Files formatted:\"; prettier -w **/* -l && echo \"\n\\033[32mFormatting Complete\\033[0m\""
   },
