@@ -12,6 +12,6 @@
     "outDir": "dist"
   },
   "typeRoots": ["./node_modules/@types", ".src/types"],
-  "exclude": ["node_modules", "dist", "src/frontend/**/*"],
-  "include": ["src/**/*", "db/**/*"]
+  "exclude": ["node_modules", "dist", "temp", "src/frontend/**/*"],
+  "include": ["src/**/*"]
 }
