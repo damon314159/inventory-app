@@ -17,6 +17,15 @@ const CreateCategoryService: CreateService<CategoryService> = ({
   }
   const { query } = accessors
 
+  const columns = new Set<keyof Category>([
+    'id',
+    'name',
+    'description',
+    'url',
+    'created_at',
+    'updated_at',
+  ])
+
   const createCategory = async ({
     name,
     description,
@@ -39,30 +48,51 @@ const CreateCategoryService: CreateService<CategoryService> = ({
     )
   }
 
-  const readCategory = async ({
-    id,
-    name,
-  }: ReadCategoryParams): Promise<Category | null> => {
-    if (id) {
-      if (id <= 0 || !Number.isInteger(id)) {
-        throw new Error('id must be a positive integer')
-      }
-      return (
-        (await query('SELECT * FROM category WHERE id = $1', [id])).rows[0] ??
-        null
+  const readCategories = async (
+    matcher: ReadCategoryParams
+  ): Promise<Category[]> => {
+    const isSafe = Object.keys(matcher).every((key): boolean =>
+      columns.has(key as never)
+    )
+    if (!isSafe) {
+      throw new Error(
+        'Matcher contained keys not present in the Category table'
       )
     }
-    // Else name
-    if (name === '') {
-      throw new Error('name must not be an empty string')
-    }
+    const whereClause: string = Object.keys(matcher)
+      .map((key, i): string => `${key} = $${i + 1}`)
+      .join(' AND ')
     return (
-      (await query('SELECT * FROM category WHERE name = $1', [name])).rows[0] ??
-      null
-    )
+      await query(
+        `SELECT * FROM category WHERE ${whereClause}`,
+        Object.values(matcher)
+      )
+    ).rows
   }
 
-  return { createCategory, readCategory }
+  const readCategory = async (
+    matcher: ReadCategoryParams
+  ): Promise<Category | null> => {
+    const rows: Category[] = await readCategories(matcher)
+    if (rows.length > 1) {
+      throw new Error(
+        'Several matching entries found. If this is intended, call readCategories instead.'
+      )
+    }
+    return rows[0] ?? null
+  }
+
+  const updateCategory = async ({ id, data }) => {}
+
+  const deleteCategory = async ({ id }) => {}
+
+  return {
+    createCategory,
+    readCategories,
+    readCategory,
+    updateCategory,
+    deleteCategory,
+  }
 }
 
 const CategoryService = CreateCategoryService({
