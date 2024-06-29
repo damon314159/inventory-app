@@ -52,7 +52,7 @@ const CreateCategoryService: CreateService<CategoryService> = ({
     const isSafe = keys.every((key): boolean => columns.has(key as never))
     if (!isSafe) {
       throw new Error(
-        'Matcher contained keys not present in the Category table'
+        'Matcher contained keys not present in the category table'
       )
     }
     const whereClause: string = keys
@@ -86,7 +86,7 @@ const CreateCategoryService: CreateService<CategoryService> = ({
     )
     if (!isSafe) {
       throw new Error(
-        'Data contained keys not present in the Category table that are modifiable'
+        'Data contained keys not present in the category table that are modifiable'
       )
     }
     if (keys.length === 0) {
