@@ -4,7 +4,9 @@ import type {
   CategoryService,
   CreateCategoryParams,
   CreateService,
+  DeleteCategoryParams,
   ReadCategoryParams,
+  UpdateCategoryParams,
 } from '../types/index.js'
 
 const CreateCategoryService: CreateService<CategoryService> = ({
@@ -25,6 +27,9 @@ const CreateCategoryService: CreateService<CategoryService> = ({
     'created_at',
     'updated_at',
   ])
+  const modifiableColumns = new Set<
+    keyof Omit<Category, 'id' | 'created_at' | 'updated_at'>
+  >(['name', 'description', 'url'])
 
   const createCategory = async ({
     name,
@@ -51,23 +56,20 @@ const CreateCategoryService: CreateService<CategoryService> = ({
   const readCategories = async (
     matcher: ReadCategoryParams
   ): Promise<Category[]> => {
-    const isSafe = Object.keys(matcher).every((key): boolean =>
-      columns.has(key as never)
-    )
+    const keys = Object.keys(matcher)
+    const vals = Object.values(matcher)
+
+    const isSafe = keys.every((key): boolean => columns.has(key as never))
     if (!isSafe) {
       throw new Error(
         'Matcher contained keys not present in the Category table'
       )
     }
-    const whereClause: string = Object.keys(matcher)
+    const whereClause: string = keys
       .map((key, i): string => `${key} = $${i + 1}`)
       .join(' AND ')
-    return (
-      await query(
-        `SELECT * FROM category WHERE ${whereClause}`,
-        Object.values(matcher)
-      )
-    ).rows
+    return (await query(`SELECT * FROM category WHERE ${whereClause}`, vals))
+      .rows
   }
 
   const readCategory = async (
@@ -82,9 +84,49 @@ const CreateCategoryService: CreateService<CategoryService> = ({
     return rows[0] ?? null
   }
 
-  const updateCategory = async ({ id, data }) => {}
+  const updateCategory = async ({
+    id,
+    data,
+  }: UpdateCategoryParams): Promise<Category | null> => {
+    const keys = Object.keys(data)
+    const vals = Object.values(data)
 
-  const deleteCategory = async ({ id }) => {}
+    const isSafe = keys.every((key): boolean =>
+      modifiableColumns.has(key as never)
+    )
+    if (!isSafe) {
+      throw new Error(
+        'Data contained keys not present in the Category table that are modifiable'
+      )
+    }
+    if (keys.length === 0) {
+      throw new Error('Data contained nothing to update')
+    }
+    if (typeof id !== 'number' || id <= 0) {
+      throw new Error('Invalid ID given to update category')
+    }
+
+    const setClause: string = keys
+      .map((key, i): string => `${key} = $${i + 1}`)
+      .join(', ')
+    return (
+      (
+        await query(
+          `UPDATE category SET ${setClause} WHERE id = $${keys.length + 1} RETURNING *`,
+          [...vals, id]
+        )
+      ).rows[0] ?? null
+    )
+  }
+
+  const deleteCategory = async ({
+    id,
+  }: DeleteCategoryParams): Promise<void> => {
+    if (typeof id !== 'number' || id <= 0) {
+      throw new Error('Invalid ID given to delete category')
+    }
+    await query('DELETE FROM category WHERE id = $1', [id])
+  }
 
   return {
     createCategory,

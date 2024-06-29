@@ -7,7 +7,9 @@ import type { Service } from './abstract/Service.js'
 import type {
   CategoryService,
   CreateCategoryParams,
+  DeleteCategoryParams,
   ReadCategoryParams,
+  UpdateCategoryParams,
 } from './concrete/CategoryService.js'
 
 export {
@@ -15,7 +17,9 @@ export {
   CreateCategoryParams,
   CreateService,
   CreateServiceParams,
+  DeleteCategoryParams,
   Dependencies,
   ReadCategoryParams,
   Service,
+  UpdateCategoryParams,
 }
