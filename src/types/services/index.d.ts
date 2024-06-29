@@ -1,5 +1,8 @@
-import type { CreateService, CreateServiceParameters } from './CreateService.js'
-import type { Dependencies } from './Dependencies.js'
-import type { Service } from './Service.js'
+import type {
+  CreateService,
+  CreateServiceParams,
+} from './abstract/CreateService.js'
+import type { Dependencies } from './abstract/Dependencies.js'
+import type { Service } from './abstract/Service.js'
 
-export { CreateService, CreateServiceParameters, Dependencies, Service }
+export { CreateService, CreateServiceParams, Dependencies, Service }
