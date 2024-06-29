@@ -10,5 +10,6 @@ CREATE TABLE IF NOT EXISTS item (
     ON UPDATE CASCADE
     ON DELETE RESTRICT,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT clock_timestamp(),
-  updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT clock_timestamp()
+  updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT clock_timestamp(),
+  UNIQUE(name, category_id)
 );
