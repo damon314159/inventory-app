@@ -5,9 +5,11 @@ import type {
   CreateCategoryParams,
   CreateService,
   CreateServiceParams,
+  DeleteCategoryParams,
   Dependencies,
   ReadCategoryParams,
   Service,
+  UpdateCategoryParams,
 } from './services/index.js'
 
 export {
@@ -17,10 +19,12 @@ export {
   CreateCategoryParams,
   CreateService,
   CreateServiceParams,
+  DeleteCategoryParams,
   Dependencies,
   GetClient,
   Item,
   Query,
   ReadCategoryParams,
   Service,
+  UpdateCategoryParams,
 }
