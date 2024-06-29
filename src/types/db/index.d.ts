@@ -1,4 +1,9 @@
-import { GetClient } from './accessors/GetClient.js'
-import { Query } from './accessors/Query.js'
+import type { GetClient } from './accessors/GetClient.js'
+import type { Query } from './accessors/Query.js'
 
-export { GetClient, Query }
+interface Accessors {
+  getClient: GetClient
+  query: Query
+}
+
+export { Accessors, GetClient, Query }
