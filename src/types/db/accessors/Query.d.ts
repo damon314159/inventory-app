@@ -2,5 +2,5 @@ import type { QueryResult } from 'pg'
 
 export type Query = (
   queryText: string,
-  params: unknown[]
+  params?: unknown[]
 ) => Promise<QueryResult>
