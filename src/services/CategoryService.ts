@@ -35,23 +35,13 @@ const CreateCategoryService: CreateService<CategoryService> = ({
     name,
     description,
     url,
-  }: CreateCategoryParams): Promise<Category | null> => {
-    if (name === '') {
-      throw new Error('name must not be an empty string')
-    }
-    if (url === '') {
-      throw new Error('url must not be an empty string')
-    }
-
-    return (
-      (
-        await query(
-          'INSET INTO category(name, description, url) VALUES($1, $2, $3) RETURNING *',
-          [name, description || null, url]
-        )
-      ).rows[0] ?? null
-    )
-  }
+  }: CreateCategoryParams): Promise<Category | null> =>
+    (
+      await query(
+        'INSET INTO category(name, description, url) VALUES($1, $2, $3) RETURNING *',
+        [name, description || null, url]
+      )
+    ).rows[0] ?? null
 
   const readCategories = async (
     matcher: ReadCategoryParams
@@ -102,9 +92,6 @@ const CreateCategoryService: CreateService<CategoryService> = ({
     if (keys.length === 0) {
       throw new Error('Data contained nothing to update')
     }
-    if (typeof id !== 'number' || id <= 0) {
-      throw new Error('Invalid ID given to update category')
-    }
 
     const setClause: string = keys
       .map((key, i): string => `${key} = $${i + 1}`)
@@ -122,9 +109,6 @@ const CreateCategoryService: CreateService<CategoryService> = ({
   const deleteCategory = async ({
     id,
   }: DeleteCategoryParams): Promise<void> => {
-    if (typeof id !== 'number' || id <= 0) {
-      throw new Error('Invalid ID given to delete category')
-    }
     await query('DELETE FROM category WHERE id = $1', [id])
   }
 
