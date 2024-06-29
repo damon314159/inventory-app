@@ -6,6 +6,7 @@ import express, {
   type RequestHandler,
   type ErrorRequestHandler,
 } from 'express'
+import 'express-async-handler'
 import helmet from 'helmet'
 import createError from 'http-errors'
 import logger from 'morgan'
