@@ -1,7 +1,7 @@
 import pg, { type Pool } from 'pg'
 import createQuery from './accessors/query.js'
 import createGetClient from './accessors/getClient.js'
-import type { GetClient, Query } from '../types/index.js'
+import type { Accessors, GetClient, Query } from '../types/index.js'
 
 const pool: Pool = new pg.Pool({
   user: process.env.DB_USER,
@@ -13,5 +13,7 @@ const pool: Pool = new pg.Pool({
 
 const query: Query = createQuery(pool)
 const getClient: GetClient = createGetClient(pool)
+const accessors: Accessors = { query, getClient }
 
+export default accessors
 export { pool, query, getClient }
