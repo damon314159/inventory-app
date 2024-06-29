@@ -3,13 +3,18 @@ import type { Category, Item } from './models/index.js'
 import type {
   CategoryService,
   CreateCategoryParams,
+  CreateItemParams,
   CreateService,
   CreateServiceParams,
   DeleteCategoryParams,
+  DeleteItemParams,
   Dependencies,
+  ItemService,
   ReadCategoryParams,
+  ReadItemParams,
   Service,
   UpdateCategoryParams,
+  UpdateItemParams,
 } from './services/index.js'
 
 export {
@@ -17,14 +22,19 @@ export {
   Category,
   CategoryService,
   CreateCategoryParams,
+  CreateItemParams,
   CreateService,
   CreateServiceParams,
   DeleteCategoryParams,
+  DeleteItemParams,
   Dependencies,
   GetClient,
   Item,
+  ItemService,
   Query,
   ReadCategoryParams,
+  ReadItemParams,
   Service,
   UpdateCategoryParams,
+  UpdateItemParams,
 }
