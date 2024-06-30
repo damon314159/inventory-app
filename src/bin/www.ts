@@ -3,8 +3,8 @@
 import http from 'node:http'
 import Debug from 'debug'
 import app from '../app.js'
-import type { AddressInfo } from 'node:net'
 import type { HttpError } from 'http-errors'
+import type { AddressInfo } from 'node:net'
 
 // Mock Debug with an empty function whenever mode is not development
 const debug =

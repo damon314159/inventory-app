@@ -139,10 +139,10 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
 
   return {
     createItem,
-    readItems,
-    readItem,
-    updateItem,
     deleteItem,
+    readItem,
+    readItems,
+    updateItem,
   }
 }
 

@@ -13,7 +13,12 @@ module.exports = {
     'plugin:@typescript-eslint/stylistic',
     'prettier',
   ],
-  plugins: ['unicorn', '@typescript-eslint', 'require-extensions'],
+  plugins: [
+    'unicorn',
+    '@typescript-eslint',
+    'sort-exports',
+    'require-extensions',
+  ],
   rules: {
     'arrow-body-style': 'error',
     'prefer-arrow-callback': 'error',
@@ -32,6 +37,10 @@ module.exports = {
     'import/order': [
       'error',
       {
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
         groups: [
           'builtin',
           'external',
@@ -43,6 +52,13 @@ module.exports = {
         ],
       },
     ],
+    'sort-imports': [
+      'error',
+      { allowSeparatedGroups: true, ignoreDeclarationSort: true },
+    ],
+    'sort-exports/sort-exports': ['error', { sortDir: 'asc' }],
+    'sort-keys': 'error',
+    'sort-vars': 'error',
     'import/prefer-default-export': 'off',
     'linebreak-style': ['error', 'unix'],
     'unicorn/prefer-node-protocol': 'error',

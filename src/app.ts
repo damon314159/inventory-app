@@ -1,10 +1,10 @@
-import { resolve, dirname } from 'node:path'
+import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import cookieParser from 'cookie-parser'
 import express, {
   type Application,
-  type RequestHandler,
   type ErrorRequestHandler,
+  type RequestHandler,
 } from 'express'
 import 'express-async-handler'
 import helmet from 'helmet'
@@ -24,18 +24,18 @@ app.use(
   helmet({
     contentSecurityPolicy: {
       // Define as strict CSP rules as possible where the defaults are relaxed
-      useDefaults: true,
       directives: {
+        'font-src': ["'self'"],
         'img-src': ["'self'"],
         'style-src': ["'self'"],
         'style-src-elem': ["'self'"],
-        'font-src': ["'self'"],
         ...(process.env.LOCALHOST === 'true'
           ? // Stop webkit/safari asking for https assets on an http localhost
             { upgradeInsecureRequests: null }
           : // Otherwise, don't set the option
             {}),
       },
+      useDefaults: true,
     },
   })
 )

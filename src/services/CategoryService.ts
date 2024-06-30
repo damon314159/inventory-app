@@ -125,10 +125,10 @@ const CreateCategoryService: CreateService<CategoryService> = ({
 
   return {
     createCategory,
+    deleteCategory,
     readCategories,
     readCategory,
     updateCategory,
-    deleteCategory,
   }
 }
 

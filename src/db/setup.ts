@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 /* eslint-disable no-await-in-loop */
+import { readFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { readFile } from 'node:fs/promises'
 import pg, { type Pool, type PoolClient } from 'pg'
 
 // Replace CommonJS __dirname with an ESM alternative
@@ -10,11 +10,11 @@ import pg, { type Pool, type PoolClient } from 'pg'
 const __dirname: string = dirname(fileURLToPath(import.meta.url))
 
 const pool: Pool = new pg.Pool({
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT) ?? 5432,
   database: process.env.DB_NAME ?? 'inventory_app',
+  host: process.env.DB_HOST,
+  password: process.env.DB_PASSWORD,
+  port: Number(process.env.DB_PORT) ?? 5432,
+  user: process.env.DB_USER,
 })
 
 const runMigrations = async (): Promise<void> => {
