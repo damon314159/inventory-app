@@ -26,10 +26,11 @@ cd inventory-app
 npm install
 ```
 
-**Run the App:** Start the development server by running the following commands:
+**Run the App:** Start the development server by running the following commands. You will need to provide a `.env` file specifying connection variables to your Postgres DB
 
 ```bash
 npm run build
+npm run migrations
 npm start
 ```
 
