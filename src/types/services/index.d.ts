@@ -9,9 +9,10 @@ import type {
   UpdateCategoryParams,
 } from './concrete/CategoryService.js'
 import type {
-  ItemService,
   CreateItemParams,
   DeleteItemParams,
+  ItemService,
+  ItemServiceDeps,
   ReadItemParams,
   UpdateItemParams,
 } from './concrete/ItemService.js'
@@ -25,6 +26,7 @@ export {
   DeleteItemParams,
   Dependencies,
   ItemService,
+  ItemServiceDeps,
   ReadCategoryParams,
   ReadItemParams,
   Service,
