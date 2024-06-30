@@ -1,7 +1,4 @@
-import type {
-  CreateService,
-  CreateServiceParams,
-} from './abstract/CreateService.js'
+import type { CreateService } from './abstract/CreateService.js'
 import type { Dependencies } from './abstract/Dependencies.js'
 import type { Service } from './abstract/Service.js'
 import type {
@@ -24,7 +21,6 @@ export {
   CreateCategoryParams,
   CreateItemParams,
   CreateService,
-  CreateServiceParams,
   DeleteCategoryParams,
   DeleteItemParams,
   Dependencies,

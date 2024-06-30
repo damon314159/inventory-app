@@ -121,9 +121,7 @@ const CreateCategoryService: CreateService<CategoryService> = ({
   }
 }
 
-const CategoryService = CreateCategoryService({
-  accessors: accessorsInstance,
-})
-export default CategoryService
+const categoryService = CreateCategoryService({ accessors: accessorsInstance })
+export default categoryService
 
 export { CreateCategoryService }

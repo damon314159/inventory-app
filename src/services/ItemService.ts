@@ -1,5 +1,7 @@
 import accessorsInstance from '../db/index.js'
+import categoryServiceInstance from './CategoryService.js'
 import type {
+  CategoryService,
   CreateItemParams,
   CreateService,
   DeleteItemParams,
@@ -9,9 +11,10 @@ import type {
   UpdateItemParams,
 } from '../types/index.js'
 
-const CreateItemService: CreateService<ItemService> = ({
-  accessors,
-}): ItemService => {
+const CreateItemService: CreateService<
+  ItemService,
+  { categoryService: CategoryService }
+> = ({ accessors, dependencies: { categoryService } }): ItemService => {
   if (!accessors) {
     throw new TypeError('CreateItemService requires accessors to be non null')
   }
@@ -128,7 +131,10 @@ const CreateItemService: CreateService<ItemService> = ({
   }
 }
 
-const ItemService = CreateItemService({ accessors: accessorsInstance })
-export default ItemService
+const itemService = CreateItemService({
+  accessors: accessorsInstance,
+  dependencies: { categoryService: categoryServiceInstance },
+})
+export default itemService
 
 export { CreateItemService }
