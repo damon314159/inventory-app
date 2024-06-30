@@ -50,7 +50,10 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
       throw new Error('Stock must not be negative')
     }
 
-    // TODO attempt to find category with matching ID before querying
+    const category = await categoryService.readCategory({ id: category_id })
+    if (!category) {
+      throw new Error('Could not find associated category to create item')
+    }
 
     return (
       (
