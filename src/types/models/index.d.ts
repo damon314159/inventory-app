@@ -1,4 +1,4 @@
-import type { Category } from './Category.js'
-import type { Item } from './Item.js'
+import type { Category, CategoryQuery } from './Category.js'
+import type { Item, ItemQuery } from './Item.js'
 
-export { Category, Item }
+export { Category, CategoryQuery, Item, ItemQuery }
