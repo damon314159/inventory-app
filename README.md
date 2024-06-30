@@ -26,9 +26,10 @@ cd inventory-app
 npm install
 ```
 
-**Run the App:** Start the development server by running the following command:
+**Run the App:** Start the development server by running the following commands:
 
 ```bash
+npm run build
 npm start
 ```
 
