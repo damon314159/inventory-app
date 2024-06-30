@@ -2,14 +2,14 @@ import type { Category } from '../../models/index.js'
 
 export type CreateCategoryParams = Omit<
   Category,
-  'id' | 'created_at' | 'updated_at'
+  'id' | 'createdAt' | 'updatedAt'
 >
 
 export type ReadCategoryParams = Partial<Category>
 
 export interface UpdateCategoryParams {
   id: number
-  data: Partial<Omit<Category, 'id' | 'created_at' | 'updated_at'>>
+  data: Partial<Omit<Category, 'id' | 'createdAt' | 'updatedAt'>>
 }
 
 export interface DeleteCategoryParams {

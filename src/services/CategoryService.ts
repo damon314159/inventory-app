@@ -24,11 +24,11 @@ const CreateCategoryService: CreateService<CategoryService> = ({
     'name',
     'description',
     'url',
-    'created_at',
-    'updated_at',
+    'createdAt',
+    'updatedAt',
   ])
   const modifiableColumns = new Set<
-    keyof Omit<Category, 'id' | 'created_at' | 'updated_at'>
+    keyof Omit<Category, 'id' | 'createdAt' | 'updatedAt'>
   >(['name', 'description', 'url'])
 
   const createCategory = async ({

@@ -3,13 +3,13 @@ import type { Service } from '../abstract/Service.js'
 import type { CategoryService } from './CategoryService.js'
 import type { Item } from '../../models/index.js'
 
-export type CreateItemParams = Omit<Item, 'id' | 'created_at' | 'updated_at'>
+export type CreateItemParams = Omit<Item, 'id' | 'createdAt' | 'updatedAt'>
 
 export type ReadItemParams = Partial<Item>
 
 export interface UpdateItemParams {
   id: number
-  data: Partial<Omit<Item, 'id' | 'created_at' | 'updated_at'>>
+  data: Partial<Omit<Item, 'id' | 'createdAt' | 'updatedAt'>>
 }
 
 export interface DeleteItemParams {

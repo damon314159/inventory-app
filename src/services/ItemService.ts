@@ -27,13 +27,13 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
     'url',
     'price',
     'stock',
-    'category_id',
-    'created_at',
-    'updated_at',
+    'categoryId',
+    'createdAt',
+    'updatedAt',
   ])
   const modifiableColumns = new Set<
-    keyof Omit<Item, 'id' | 'created_at' | 'updated_at'>
-  >(['name', 'description', 'url', 'price', 'stock', 'category_id'])
+    keyof Omit<Item, 'id' | 'createdAt' | 'updatedAt'>
+  >(['name', 'description', 'url', 'price', 'stock', 'categoryId'])
 
   const createItem = async ({
     name,
@@ -41,7 +41,7 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
     url,
     price,
     stock,
-    category_id,
+    categoryId,
   }: CreateItemParams): Promise<Item | null> => {
     if (price < 0) {
       throw new Error('Price must not be negative')
@@ -50,7 +50,7 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
       throw new Error('Stock must not be negative')
     }
 
-    const category = await categoryService.readCategory({ id: category_id })
+    const category = await categoryService.readCategory({ id: categoryId })
     if (!category) {
       throw new Error('Could not find associated category to create item')
     }
@@ -59,7 +59,7 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
       (
         await query(
           'INSET INTO item(name, description, url, price, stock, category_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *',
-          [name, description || null, url, price, stock, category_id]
+          [name, description || null, url, price, stock, categoryId]
         )
       ).rows[0] ?? null
     )

@@ -46,7 +46,6 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'linebreak-style': ['error', 'unix'],
     'unicorn/prefer-node-protocol': 'error',
-    camelcase: 'off',
     'no-param-reassign': ['error', { props: false }],
     '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/no-confusing-void-expression': 'error',
