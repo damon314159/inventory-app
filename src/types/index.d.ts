@@ -1,5 +1,10 @@
 import type { Accessors, GetClient, Query } from './db/index.js'
-import type { Category, Item } from './models/index.js'
+import type {
+  Category,
+  CategoryQuery,
+  Item,
+  ItemQuery,
+} from './models/index.js'
 import type {
   CategoryService,
   CreateCategoryParams,
@@ -20,6 +25,7 @@ import type {
 export {
   Accessors,
   Category,
+  CategoryQuery,
   CategoryService,
   CreateCategoryParams,
   CreateItemParams,
@@ -29,6 +35,7 @@ export {
   Dependencies,
   GetClient,
   Item,
+  ItemQuery,
   ItemService,
   ItemServiceDeps,
   Query,

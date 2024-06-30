@@ -1,6 +1,8 @@
 import accessorsInstance from '../db/index.js'
+import { camelToSnake, snakeToCamel } from '../utils/index.js'
 import type {
   Category,
+  CategoryQuery,
   CategoryService,
   CreateCategoryParams,
   CreateService,
@@ -31,6 +33,14 @@ const CreateCategoryService: CreateService<CategoryService> = ({
     keyof Omit<Category, 'id' | 'createdAt' | 'updatedAt'>
   >(['name', 'description', 'url'])
 
+  const camelCaseQueryResult = (category: CategoryQuery): Category =>
+    Object.fromEntries(
+      Object.entries(category).map(([key, val]): unknown[] => [
+        snakeToCamel(key),
+        val,
+      ])
+    ) as Category
+
   const createCategory = async ({
     name,
     description,
@@ -41,7 +51,7 @@ const CreateCategoryService: CreateService<CategoryService> = ({
         'INSET INTO category(name, description, url) VALUES($1, $2, $3) RETURNING *',
         [name, description || null, url]
       )
-    ).rows[0] ?? null
+    ).rows.map(camelCaseQueryResult)[0] ?? null
 
   const readCategories = async (
     matcher: ReadCategoryParams
@@ -56,10 +66,11 @@ const CreateCategoryService: CreateService<CategoryService> = ({
       )
     }
     const whereClause: string = keys
-      .map((key, i): string => `${key} = $${i + 1}`)
+      .map((key, i): string => `${camelToSnake(key)} = $${i + 1}`)
       .join(' AND ')
-    return (await query(`SELECT * FROM category WHERE ${whereClause}`, vals))
-      .rows
+    return (
+      await query(`SELECT * FROM category WHERE ${whereClause}`, vals)
+    ).rows.map(camelCaseQueryResult)
   }
 
   const readCategory = async (
@@ -94,7 +105,7 @@ const CreateCategoryService: CreateService<CategoryService> = ({
     }
 
     const setClause: string = keys
-      .map((key, i): string => `${key} = $${i + 1}`)
+      .map((key, i): string => `${camelToSnake(key)} = $${i + 1}`)
       .join(', ')
     return (
       (
@@ -102,7 +113,7 @@ const CreateCategoryService: CreateService<CategoryService> = ({
           `UPDATE category SET ${setClause} WHERE id = $${keys.length + 1} RETURNING *`,
           [...vals, id]
         )
-      ).rows[0] ?? null
+      ).rows.map(camelCaseQueryResult)[0] ?? null
     )
   }
 
