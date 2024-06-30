@@ -1,10 +1,12 @@
 import accessorsInstance from '../db/index.js'
+import { camelToSnake, snakeToCamel } from '../utils/index.js'
 import categoryServiceInstance from './CategoryService.js'
 import type {
   CreateItemParams,
   CreateService,
   DeleteItemParams,
   Item,
+  ItemQuery,
   ItemService,
   ItemServiceDeps,
   ReadItemParams,
@@ -35,6 +37,14 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
     keyof Omit<Item, 'id' | 'createdAt' | 'updatedAt'>
   >(['name', 'description', 'url', 'price', 'stock', 'categoryId'])
 
+  const camelCaseQueryResult = (item: ItemQuery): Item =>
+    Object.fromEntries(
+      Object.entries(item).map(([key, val]): unknown[] => [
+        snakeToCamel(key),
+        val,
+      ])
+    ) as Item
+
   const createItem = async ({
     name,
     description,
@@ -61,7 +71,7 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
           'INSET INTO item(name, description, url, price, stock, category_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *',
           [name, description || null, url, price, stock, categoryId]
         )
-      ).rows[0] ?? null
+      ).rows.map(camelCaseQueryResult)[0] ?? null
     )
   }
 
@@ -74,9 +84,11 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
       throw new Error('Matcher contained keys not present in the item table')
     }
     const whereClause: string = keys
-      .map((key, i): string => `${key} = $${i + 1}`)
+      .map((key, i): string => `${camelToSnake(key)} = $${i + 1}`)
       .join(' AND ')
-    return (await query(`SELECT * FROM item WHERE ${whereClause}`, vals)).rows
+    return (
+      await query(`SELECT * FROM item WHERE ${whereClause}`, vals)
+    ).rows.map(camelCaseQueryResult)
   }
 
   const readItem = async (matcher: ReadItemParams): Promise<Item | null> => {
@@ -109,7 +121,7 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
     }
 
     const setClause: string = keys
-      .map((key, i): string => `${key} = $${i + 1}`)
+      .map((key, i): string => `${camelToSnake(key)} = $${i + 1}`)
       .join(', ')
     return (
       (
@@ -117,7 +129,7 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
           `UPDATE item SET ${setClause} WHERE id = $${keys.length + 1} RETURNING *`,
           [...vals, id]
         )
-      ).rows[0] ?? null
+      ).rows.map(camelCaseQueryResult)[0] ?? null
     )
   }
 
