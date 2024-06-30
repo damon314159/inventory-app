@@ -5,7 +5,7 @@ export interface Item {
   url: string
   price: number
   stock: number
-  category_id: number
-  created_at: Date
-  updated_at: Date
+  categoryId: number
+  createdAt: Date
+  updatedAt: Date
 }
