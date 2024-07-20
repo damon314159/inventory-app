@@ -99,7 +99,7 @@ const validateReadCategories = createValidateReadCategories()
 const validateReadCategory = createValidateReadCategories()
 
 const validateUpdateCategory: ValidationChain[] = [
-  id(),
+  id(param),
   nameOptional(body, 'data.name'),
   descriptionOptional(body, 'data.description'),
   urlOptional(body, 'data.url'),

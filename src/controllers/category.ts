@@ -90,12 +90,13 @@ const updateCategory: RequestHandler = async (
       return
     }
 
-    const { id, data } = req.body
+    const { id } = req.params
+    const { data } = req.body
     const { name, description, url } = data ?? {}
 
     const category = await categoryService.updateCategory({
       data: { description, name, url },
-      id,
+      id: Number(id),
     })
     // TODO: render some sort of success view
   } catch (err) {
