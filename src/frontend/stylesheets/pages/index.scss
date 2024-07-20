@@ -1,6 +1,6 @@
 .hero {
-  background: #ecf0f1;
-  color: #333;
+  background: (--cream);
+  color: var(--grey);
   text-align: center;
   padding: 4rem 2rem;
   h1 {
@@ -20,7 +20,7 @@
   align-items: center;
   padding: 4rem 2rem;
   text-align: center;
-  background-color: #f9f9f9;
+  background-color: var(--linen);
   h2 {
     font-size: 2rem;
     margin-bottom: 2rem;
@@ -40,7 +40,7 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
   .dashboard-item {
-    background-color: #fff;
+    background-color: var(--cream);
     padding: 1.5rem;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

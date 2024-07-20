@@ -4,37 +4,33 @@
 
 <body>
   <%- include('../header'); -%>
-  <main class="categories">
+  <main>
     <section class="category-header">
-      <div class="container">
-        <h1>Inventory Categories</h1>
-        <div class="header-actions">
-          <input type="text" placeholder="Search Categories..." class="search-field" />
-          <a href="#add-category" class="btn btn-primary">Add New Category</a>
-        </div>
+      <h1>Inventory Categories</h1>
+      <div class="header-actions">
+        <input type="text" placeholder="Search Categories..." class="search-field" />
+        <a href="#add-category" class="btn btn-primary">Add New Category</a>
       </div>
     </section>
     <section class="category-list">
-      <div class="container">
-        <div class="category-grid">
-          <div class="category-item">
-            <h3>Category 1</h3>
-            <p>Description for Category 1.</p>
-            <div class="actions">
-              <a href="#edit" class="btn">Edit</a>
-              <a href="#delete" class="btn btn-danger">Delete</a>
-            </div>
+      <div class="category-grid">
+        <div class="category-item">
+          <h3>Category 1</h3>
+          <p>Description for Category 1.</p>
+          <div class="actions">
+            <a href="#edit" class="btn btn-secondary">Edit</a>
+            <a href="#delete" class="btn btn-danger">Delete</a>
           </div>
-          <div class="category-item">
-            <h3>Category 2</h3>
-            <p>Description for Category 2.</p>
-            <div class="actions">
-              <a href="#edit" class="btn">Edit</a>
-              <a href="#delete" class="btn btn-danger">Delete</a>
-            </div>
-          </div>
-          <!-- More categories can be added here -->
         </div>
+        <div class="category-item">
+          <h3>Category 2</h3>
+          <p>Description for Category 2.</p>
+          <div class="actions">
+            <a href="#edit" class="btn btn-secondary">Edit</a>
+            <a href="#delete" class="btn btn-danger">Delete</a>
+          </div>
+        </div>
+        <!-- More categories can be added here -->
       </div>
     </section>
   </main>
