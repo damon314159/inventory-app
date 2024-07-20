@@ -1,0 +1,39 @@
+.link {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 600;
+  transition:
+    color 0.3s,
+    border-bottom-color 0.3s;
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &.link-primary {
+    color: var(--purple);
+    &:hover {
+      color: var(--purple-lightened);
+    }
+  }
+
+  &.link-secondary {
+    color: var(--pale-blue);
+    &:hover {
+      color: var(--pale-blue-darkened);
+    }
+  }
+
+  &.link-danger {
+    color: var(--red);
+    &:hover {
+      color: var(--red-lightened);
+    }
+  }
+
+  &.link-cream {
+    color: var(--cream);
+    &:hover {
+      color: var(--linen);
+    }
+  }
+}

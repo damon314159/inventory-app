@@ -2,6 +2,10 @@ import { validationResult } from 'express-validator'
 import categoryService from '../services/CategoryService.js'
 import type { Request, RequestHandler, Response } from 'express'
 
+const categoryIndex: RequestHandler = (_req: Request, res: Response): void => {
+  res.render('categories/index')
+}
+
 const createCategory: RequestHandler = async (
   req: Request,
   res: Response
@@ -124,6 +128,7 @@ const deleteCategory: RequestHandler = async (
 }
 
 export {
+  categoryIndex,
   createCategory,
   deleteCategory,
   readCategories,

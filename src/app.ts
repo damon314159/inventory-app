@@ -55,7 +55,7 @@ app.use(express.static(resolve(__dirname, 'public')))
 
 // Routes
 app.use('/', indexRouter)
-app.use('/category', categoryRouter)
+app.use('/categories', categoryRouter)
 
 // Catch 404 and forward to error handler
 const handle404: RequestHandler = (_req, _res, next): void => {

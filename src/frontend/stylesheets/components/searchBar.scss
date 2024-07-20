@@ -1,0 +1,19 @@
+.search-bar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  .search-field {
+    width: 100%;
+    max-width: 600px;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--navy);
+    color: var(--navy-lightened);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    &:focus {
+      border-color: var(--purple);
+      outline: none;
+    }
+  }
+}
