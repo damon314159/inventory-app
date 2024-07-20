@@ -1,16 +1,55 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <title><%= title %></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inventory Management</title>
     <link rel="stylesheet" href="/styles/index.css" />
     <script src="/scripts/index.js" defer></script>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <p><a href="/users">Users</a></p>
-    <div>
-      <img src="/assets/images/flower.jpg" />
-    </div>
+    <header>
+      <nav class="navbar">
+        <div class="container">
+          <h1><a href="/" class="brand">Inventory App</a></h1>
+          <ul class="nav-links">
+            <li><a href="/categories">Categories</a></li>
+            <li><a href="/items">Items</a></li>
+            <li><a href="/about">About</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="container">
+          <h1>Welcome Back!</h1>
+          <p>Here's an overview of your inventory management today.</p>
+        </div>
+      </section>
+      <section id="dashboard" class="dashboard">
+        <h2>Dashboard</h2>
+        <div class="dashboard-grid-container">
+          <div class="dashboard-grid">
+            <div class="dashboard-item">
+              <h3>Total Items</h3>
+              <p><%= totalItems %></p>
+            </div>
+            <div class="dashboard-item">
+              <h3>Items Low on Stock</h3>
+              <p><%= totalLowStock %></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="container">
+        <p>
+          &copy; 2024 <a href="https://github.com/damon314159">Damon314159</a>.
+          All rights reserved.
+        </p>
+      </div>
+    </footer>
   </body>
 </html>
