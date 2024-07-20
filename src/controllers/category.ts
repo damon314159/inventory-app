@@ -1,8 +1,11 @@
 import { validationResult } from 'express-validator'
 import categoryService from '../services/CategoryService.js'
-import type { Request, Response } from 'express'
+import type { Request, RequestHandler, Response } from 'express'
 
-const createCategory = async (req: Request, res: Response): Promise<void> => {
+const createCategory: RequestHandler = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -22,7 +25,10 @@ const createCategory = async (req: Request, res: Response): Promise<void> => {
   }
 }
 
-const readCategories = async (req: Request, res: Response): Promise<void> => {
+const readCategories: RequestHandler = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -46,7 +52,10 @@ const readCategories = async (req: Request, res: Response): Promise<void> => {
   }
 }
 
-const readCategory = async (req: Request, res: Response): Promise<void> => {
+const readCategory: RequestHandler = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -70,7 +79,10 @@ const readCategory = async (req: Request, res: Response): Promise<void> => {
   }
 }
 
-const updateCategory = async (req: Request, res: Response): Promise<void> => {
+const updateCategory: RequestHandler = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -91,7 +103,10 @@ const updateCategory = async (req: Request, res: Response): Promise<void> => {
   }
 }
 
-const deleteCategory = async (req: Request, res: Response): Promise<void> => {
+const deleteCategory: RequestHandler = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
