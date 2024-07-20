@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import {
+  categoryIndex,
   createCategory,
   deleteCategory,
   readCategories,
@@ -17,6 +18,7 @@ import {
 // Instantiate a new router
 const router = Router()
 
+router.get('/', categoryIndex)
 router.post('/create', validateCreateCategory, createCategory)
 router.get('/read-many', validateReadCategories, readCategories)
 router.get('/read', validateReadCategory, readCategory)
