@@ -1,18 +1,16 @@
 <!doctype html>
 <html lang="en">
-<%- include('../head'); -%>
+<%- include('../components/head'); -%>
 
 <body>
-  <%- include('../header'); -%>
+  <%- include('../components/header'); -%>
   <main>
     <section class="category-header">
       <h1>Inventory Categories</h1>
       <a href="#add-category" class="btn btn-primary">Add New Category</a>
     </section>
     <section class="category-list">
-      <div class="search-bar">
-        <input type="text" placeholder="Search Categories..." class="search-field" />
-      </div>
+      <%- include('../components/searchBar'); -%>
       <div class="category-grid">
         <div class="category-item">
           <h3>Category 1</h3>
@@ -34,7 +32,7 @@
       </div>
     </section>
   </main>
-  <%- include('../footer'); -%>
+  <%- include('../components/footer'); -%>
 </body>
 
 </html>
