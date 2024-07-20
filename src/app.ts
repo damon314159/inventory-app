@@ -9,6 +9,7 @@ import express, {
 import 'express-async-handler'
 import helmet from 'helmet'
 import createError from 'http-errors'
+import methodOverride from 'method-override'
 import logger from 'morgan'
 import indexRouter from './routes/index.js'
 import usersRouter from './routes/users.js'
@@ -44,6 +45,7 @@ app.use(
 app.set('view engine', 'ejs')
 app.set('views', resolve(__dirname, 'views'))
 
+app.use(methodOverride('_method'))
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
