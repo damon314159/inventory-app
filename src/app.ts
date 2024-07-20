@@ -9,9 +9,10 @@ import express, {
 import 'express-async-handler'
 import helmet from 'helmet'
 import createError from 'http-errors'
+import methodOverride from 'method-override'
 import logger from 'morgan'
+import categoryRouter from './routes/category.js'
 import indexRouter from './routes/index.js'
-import usersRouter from './routes/users.js'
 
 const app: Application = express()
 
@@ -44,6 +45,7 @@ app.use(
 app.set('view engine', 'ejs')
 app.set('views', resolve(__dirname, 'views'))
 
+app.use(methodOverride('_method'))
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -53,7 +55,7 @@ app.use(express.static(resolve(__dirname, 'public')))
 
 // Routes
 app.use('/', indexRouter)
-app.use('/users', usersRouter)
+app.use('/category', categoryRouter)
 
 // Catch 404 and forward to error handler
 const handle404: RequestHandler = (_req, _res, next): void => {
