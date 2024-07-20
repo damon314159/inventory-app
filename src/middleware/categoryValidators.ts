@@ -1,4 +1,4 @@
-import { body, query } from 'express-validator'
+import { body, param, query } from 'express-validator'
 import type { ValidationChain } from 'express-validator'
 
 // First, construct a set of base validators for each column in the category table
@@ -105,7 +105,7 @@ const validateUpdateCategory: ValidationChain[] = [
   urlOptional(body, 'data.url'),
 ]
 
-const validateDeleteCategory: ValidationChain[] = [id()]
+const validateDeleteCategory: ValidationChain[] = [id(param)]
 
 export {
   validateCreateCategory,
