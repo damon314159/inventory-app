@@ -1,6 +1,10 @@
-@import './header.scss';
-@import './footer.scss';
-@import './layout.scss';
-@import './links.scss';
+@import './designSystem/colours.scss';
+@import './designSystem/links.scss';
+@import './designSystem/buttons.scss';
+
+@import './components/header.scss';
+@import './components/footer.scss';
+@import './components/layout.scss';
 
 @import './pages/index.scss';
+@import './pages/categories.scss';
