@@ -37,13 +37,13 @@ const readCategories: RequestHandler = async (
     }
 
     const { id, name, description, url, createdAt, updatedAt } =
-      req.query as Record<string, string> // This cast means that path?id=one&id=two will fail
+      req.query as Record<string, string | undefined> // This cast means that path?id=one&id=two will fail
     const categories = await categoryService.readCategories({
-      createdAt: new Date(createdAt),
+      createdAt: createdAt ? new Date(createdAt) : undefined,
       description,
       id: Number(id),
       name,
-      updatedAt: new Date(updatedAt),
+      updatedAt: updatedAt ? new Date(updatedAt) : undefined,
       url,
     })
     // TODO: render some sort of success view
@@ -64,13 +64,13 @@ const readCategory: RequestHandler = async (
     }
 
     const { id, name, description, url, createdAt, updatedAt } =
-      req.query as Record<string, string> // This cast means that path?id=one&id=two will fail
+      req.query as Record<string, string | undefined> // This cast means that path?id=one&id=two will fail
     const category = await categoryService.readCategory({
-      createdAt: new Date(createdAt),
+      createdAt: createdAt ? new Date(createdAt) : undefined,
       description,
       id: Number(id),
       name,
-      updatedAt: new Date(updatedAt),
+      updatedAt: updatedAt ? new Date(updatedAt) : undefined,
       url,
     })
     // TODO: render some sort of success view
