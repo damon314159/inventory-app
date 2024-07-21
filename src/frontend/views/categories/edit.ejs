@@ -7,24 +7,24 @@
   <main class="edit-category">
     <section class="edit-section">
       <div class="container">
-        <% if (success) { %>
+        <% if (locals.success) { %>
         <div class="success-message">
           <h1>Category Edited Successfully!</h1>
           <p>Your category has been edited. You can go back to the <a href="/categories" class="link link-primary">categories list</a>.</p>
           <a href="/categories" class="btn btn-primary">Back to Categories</a>
         </div>
         <% } else { %>
-        <h1>Edit Category <%= name %></h1>
-        <form action="/categories/edit/<%= id %>?_method=PATCH" method="POST" class="category-form">
+        <h1>Edit Category <%= locals.name %></h1>
+        <form action="/categories/edit/<%= id %>?_method=patch" method="POST" class="category-form">
           <div class="form-group">
             <label for="name">Category Name *</label>
-            <input type="text" id="name" name="name" value="<%= formData.name %>" placeholder="Enter category name" autocomplete="off" required />
+            <input type="text" id="name" name="name" value="<%= locals.formData?.name %>" placeholder="Enter category name" autocomplete="off" required />
           </div>
           <div class="form-group">
             <label for="description">Description</label>
-            <textarea id="description" name="description" placeholder="Enter description" autocomplete="off" rows="4"><%= formData.description %></textarea>
+            <textarea id="description" name="description" placeholder="Enter description" autocomplete="off" rows="4"><%= locals.formData?.description %></textarea>
           </div>
-          <%- include('../components/errors', { errors }) -%>
+          <%- include('../components/errors', { errors: locals.errors }) -%>
           <div class="button-panel">
             <button type="submit" class="btn btn-primary">Edit Category</button>
             <a href="/categories" class="btn btn-danger">Cancel</a>

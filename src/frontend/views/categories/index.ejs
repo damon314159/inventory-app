@@ -13,11 +13,11 @@
       <%- include('../components/searchBar', { 
         searchAction: '/categories/find', 
         field: 'name', 
-        value: searchValue,
-        errors
+        value: locals.searchValue,
+        errors: locals.errors
       }); -%>
       <div class="category-grid">
-        <% if (categories && categories.length > 0) { %>
+        <% if (locals.categories && categories.length > 0) { %>
         <% categories.forEach(function(category) { %>
         <div class="category-item">
           <h3><%= category.name %></h3>
