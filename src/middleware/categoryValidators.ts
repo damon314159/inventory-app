@@ -42,28 +42,6 @@ const descriptionOptional = (
   field = 'description'
 ): ValidationChain => description(location, field).optional()
 
-const url = (location = body, field = 'url'): ValidationChain =>
-  location(field)
-    .escape()
-    .isString()
-    .withMessage('URL must be a string')
-    .notEmpty()
-    .withMessage('URL cannot be empty')
-    .isURL()
-    .withMessage('URL must be a valid URL')
-    .isLength({ max: 255 })
-    .withMessage('URL must not exceed 255 characters')
-const urlOptional = (location = body, field = 'url'): ValidationChain =>
-  location(field)
-    .escape()
-    .optional()
-    .isString()
-    .withMessage('URL must be a string')
-    .isURL()
-    .withMessage('URL must be a valid URL')
-    .isLength({ max: 255 })
-    .withMessage('URL must not exceed 255 characters')
-
 const createdAt = (location = body, field = 'createdAt'): ValidationChain =>
   location(field).escape().isDate()
 const createdAtOptional = (
@@ -83,7 +61,6 @@ const updatedAtOptional = (
 const validateCreateCategory: ValidationChain[] = [
   name(),
   descriptionOptional(),
-  url(),
 ]
 
 // Read category and categories are the same structure, so we can abstract
@@ -91,7 +68,6 @@ const createValidateReadCategories = (): ValidationChain[] => [
   idOptional(query),
   nameOptional(query),
   descriptionOptional(query),
-  urlOptional(query),
   createdAtOptional(query),
   updatedAtOptional(query),
 ]
@@ -102,7 +78,6 @@ const validateUpdateCategory: ValidationChain[] = [
   id(param),
   nameOptional(body, 'data.name'),
   descriptionOptional(body, 'data.description'),
-  urlOptional(body, 'data.url'),
 ]
 
 const validateDeleteCategory: ValidationChain[] = [id(param)]

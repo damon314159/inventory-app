@@ -26,13 +26,12 @@ const CreateCategoryService: CreateService<CategoryService> = ({
     'id',
     'name',
     'description',
-    'url',
     'createdAt',
     'updatedAt',
   ])
   const modifiableColumns = new Set<
     keyof Omit<Category, 'id' | 'createdAt' | 'updatedAt'>
-  >(['name', 'description', 'url'])
+  >(['name', 'description'])
 
   const camelCaseQueryResult = (category: CategoryQuery): Category =>
     Object.fromEntries(
@@ -45,12 +44,11 @@ const CreateCategoryService: CreateService<CategoryService> = ({
   const createCategory = async ({
     name,
     description,
-    url,
   }: CreateCategoryParams): Promise<Category | null> =>
     (
       await query(
-        'INSET INTO category(name, description, url) VALUES($1, $2, $3) RETURNING *',
-        [name, description || null, url]
+        'INSET INTO category(name, description) VALUES($1, $2, $3) RETURNING *',
+        [name, description || null]
       )
     ).rows.map(camelCaseQueryResult)[0] ?? null
 

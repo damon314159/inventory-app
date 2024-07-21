@@ -2,7 +2,6 @@ CREATE TABLE IF NOT EXISTS category (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) UNIQUE NOT NULL,
   description VARCHAR(255),
-  url VARCHAR(255) NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT clock_timestamp(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT clock_timestamp()
 );

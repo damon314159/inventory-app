@@ -42,12 +42,8 @@ const createCategory: RequestHandler = async (
       return
     }
 
-    const { name, description, url } = req.body
-    const category = await categoryService.createCategory({
-      description,
-      name,
-      url,
-    })
+    const { name, description } = req.body
+    const category = await categoryService.createCategory({ description, name })
     // TODO: render some sort of success view
   } catch (err) {
     // TODO: render error view
@@ -59,8 +55,10 @@ const readCategories: RequestHandler = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { id, name, description, url, createdAt, updatedAt } =
-      req.query as Record<string, string | undefined> // This cast means that path?id=one&id=two will fail
+    const { id, name, description, createdAt, updatedAt } = req.query as Record<
+      string,
+      string | undefined
+    > // This cast means that path?id=one&id=two will fail
 
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -78,7 +76,6 @@ const readCategories: RequestHandler = async (
       id: id ? Number(id) : undefined,
       name,
       updatedAt: updatedAt ? new Date(updatedAt) : undefined,
-      url,
     })
     res.render('categories/index', {
       categories,
@@ -99,8 +96,10 @@ const readCategory: RequestHandler = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { id, name, description, url, createdAt, updatedAt } =
-      req.query as Record<string, string | undefined> // This cast means that path?id=one&id=two will fail
+    const { id, name, description, createdAt, updatedAt } = req.query as Record<
+      string,
+      string | undefined
+    > // This cast means that path?id=one&id=two will fail
 
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -118,7 +117,6 @@ const readCategory: RequestHandler = async (
       id: id ? Number(id) : undefined,
       name,
       updatedAt: updatedAt ? new Date(updatedAt) : undefined,
-      url,
     })
     res.render('categories/index', {
       categories: [category],
@@ -147,10 +145,10 @@ const updateCategory: RequestHandler = async (
 
     const { id } = req.params
     const { data } = req.body
-    const { name, description, url } = data ?? {}
+    const { name, description } = data ?? {}
 
     const category = await categoryService.updateCategory({
-      data: { description, name, url },
+      data: { description, name },
       id: Number(id),
     })
     // TODO: render some sort of success view
