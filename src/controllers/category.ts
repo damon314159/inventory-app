@@ -9,15 +9,9 @@ const categoryIndex: RequestHandler = async (
   try {
     res.render('categories/index', {
       categories: await categoryService.readCategories({}),
-      errors: null,
-      searchValue: '',
     })
   } catch (err) {
-    res.render('categories/index', {
-      categories: null,
-      errors: [err],
-      searchValue: '',
-    })
+    res.render('categories/index', { errors: [err] })
   }
 }
 
@@ -25,11 +19,7 @@ const getCreateCategory: RequestHandler = (
   req: Request,
   res: Response
 ): void => {
-  res.render('categories/create', {
-    errors: null,
-    formData: { description: '', name: '' },
-    success: false,
-  })
+  res.render('categories/create')
 }
 
 const createCategory: RequestHandler = async (
@@ -44,23 +34,14 @@ const createCategory: RequestHandler = async (
       res.render('categories/create', {
         errors: errors.array(),
         formData: { description, name },
-        success: false,
       })
       return
     }
 
     await categoryService.createCategory({ description, name })
-    res.render('categories/create', {
-      errors: null,
-      formData: { description: '', name: '' },
-      success: true,
-    })
+    res.render('categories/create', { success: true })
   } catch (err) {
-    res.render('categories/create', {
-      errors: [err],
-      formData: { description: '', name: '' },
-      success: false,
-    })
+    res.render('categories/create', { errors: [err] })
   }
 }
 
@@ -77,7 +58,6 @@ const readCategories: RequestHandler = async (
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       res.render('categories/index', {
-        categories: null,
         errors: errors.array(),
         searchValue: name,
       })
@@ -91,17 +71,9 @@ const readCategories: RequestHandler = async (
       name,
       updatedAt: updatedAt ? new Date(updatedAt) : undefined,
     })
-    res.render('categories/index', {
-      categories,
-      errors: null,
-      searchValue: name,
-    })
+    res.render('categories/index', { categories, searchValue: name })
   } catch (err) {
-    res.render('categories/index', {
-      categories: null,
-      errors: [err],
-      searchValue: '',
-    })
+    res.render('categories/index', { errors: [err] })
   }
 }
 
@@ -118,7 +90,6 @@ const readCategory: RequestHandler = async (
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       res.render('categories/index', {
-        categories: null,
         errors: errors.array(),
         searchValue: name,
       })
@@ -134,15 +105,10 @@ const readCategory: RequestHandler = async (
     })
     res.render('categories/index', {
       categories: [category],
-      errors: null,
       searchValue: name,
     })
   } catch (err) {
-    res.render('categories/index', {
-      categories: null,
-      errors: [err],
-      searchValue: '',
-    })
+    res.render('categories/index', { errors: [err] })
   }
 }
 
@@ -155,13 +121,7 @@ const getUpdateCategory: RequestHandler = async (
 
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      res.render('categories/edit', {
-        errors: errors.array(),
-        formData: { description: '', name: '' },
-        id,
-        name: '',
-        success: false,
-      })
+      res.render('categories/edit', { errors: errors.array(), id })
       return
     }
 
@@ -169,29 +129,18 @@ const getUpdateCategory: RequestHandler = async (
     if (!category) {
       res.render('categories/edit', {
         errors: [new Error('No category found with this ID')],
-        formData: { description: '', name: '' },
         id,
-        name: '',
-        success: false,
       })
       return
     }
 
     res.render('categories/edit', {
-      errors: null,
       formData: { description: category.description, name: category.name },
       id,
       name: category.name,
-      success: false,
     })
   } catch (err) {
-    res.render('categories/edit', {
-      errors: [err],
-      formData: { description: '', name: '' },
-      id: 0,
-      name: '',
-      success: false,
-    })
+    res.render('categories/edit', { errors: [err] })
   }
 }
 
@@ -209,8 +158,6 @@ const updateCategory: RequestHandler = async (
         errors: [errors.mapped().id],
         formData: { description, name },
         id,
-        name: '',
-        success: false,
       })
       return
     }
@@ -219,10 +166,7 @@ const updateCategory: RequestHandler = async (
     if (!category) {
       res.render('categories/edit', {
         errors: [new Error('No category found with this ID')],
-        formData: { description: '', name: '' },
         id,
-        name: '',
-        success: false,
       })
       return
     }
@@ -233,7 +177,6 @@ const updateCategory: RequestHandler = async (
         formData: { description, name },
         id,
         name: category.name,
-        success: false,
       })
       return
     }
@@ -242,21 +185,9 @@ const updateCategory: RequestHandler = async (
       data: { description, name },
       id: Number(id),
     })
-    res.render('categories/edit', {
-      errors: null,
-      formData: { description: '', name: '' },
-      id,
-      name: category.name,
-      success: true,
-    })
+    res.render('categories/edit', { id, name: category.name, success: true })
   } catch (err) {
-    res.render('categories/edit', {
-      errors: [err],
-      formData: { description: '', name: '' },
-      id: 0,
-      name: '',
-      success: false,
-    })
+    res.render('categories/edit', { errors: [err] })
   }
 }
 
