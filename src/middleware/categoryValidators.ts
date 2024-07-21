@@ -81,11 +81,13 @@ const validateUpdateCategory: ValidationChain[] = [
   descriptionOptional(body),
 ]
 
+const validateGetDeleteCategory: ValidationChain[] = [id(param)]
 const validateDeleteCategory: ValidationChain[] = [id(param)]
 
 export {
   validateCreateCategory,
   validateDeleteCategory,
+  validateGetDeleteCategory,
   validateGetUpdateCategory,
   validateReadCategories,
   validateReadCategory,
