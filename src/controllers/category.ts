@@ -16,7 +16,7 @@ const categoryIndex: RequestHandler = async (
 }
 
 const getCreateCategory: RequestHandler = (
-  req: Request,
+  _req: Request,
   res: Response
 ): void => {
   res.render('categories/create')
@@ -191,22 +191,51 @@ const updateCategory: RequestHandler = async (
   }
 }
 
+const getDeleteCategory: RequestHandler = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = req.params
+
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      res.render('categories/delete', { errors: errors.array(), id })
+      return
+    }
+
+    const category = await categoryService.readCategory({ id: Number(id) })
+    if (!category) {
+      res.render('categories/delete', {
+        errors: [new Error('No category found with this ID')],
+        id,
+      })
+      return
+    }
+
+    res.render('categories/delete', { id, name: category.name })
+  } catch (err) {
+    res.render('categories/delete', { errors: [err] })
+  }
+}
+
 const deleteCategory: RequestHandler = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
+    const { id } = req.params
+
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      // TODO: render the form again with the errors and existing data
+      res.render('categories/delete', { errors: errors.array(), id })
       return
     }
 
-    const { id } = req.params
     await categoryService.deleteCategory({ id: Number(id) })
-    // TODO: render some sort of success view
+    res.render('categories/delete', { success: true })
   } catch (err) {
-    // TODO: render error view
+    res.render('categories/delete', { errors: [err] })
   }
 }
 
@@ -215,6 +244,7 @@ export {
   createCategory,
   deleteCategory,
   getCreateCategory,
+  getDeleteCategory,
   getUpdateCategory,
   readCategories,
   readCategory,
