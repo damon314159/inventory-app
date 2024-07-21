@@ -24,7 +24,7 @@
           <p><%= category.description %></p>
           <div class="actions">
             <a href="/categories/edit/<%= category.id %>" class="btn btn-secondary">Edit</a>
-            <a href="#delete" class="btn btn-danger">Delete</a>
+            <a href="/categories/delete/<%= category.id %>" class="btn btn-danger">Delete</a>
           </div>
         </div>
         <% }) %>

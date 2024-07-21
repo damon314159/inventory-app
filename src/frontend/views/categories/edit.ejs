@@ -15,7 +15,7 @@
         </div>
         <% } else { %>
         <h1>Edit Category <%= locals.name %></h1>
-        <form action="/categories/edit/<%= id %>?_method=patch" method="POST" class="category-form">
+        <form action="/categories/edit/<%= locals.id ?? -1 %>?_method=patch" method="POST" class="category-form">
           <div class="form-group">
             <label for="name">Category Name *</label>
             <input type="text" id="name" name="name" value="<%= locals.formData?.name %>" placeholder="Enter category name" autocomplete="off" required />
