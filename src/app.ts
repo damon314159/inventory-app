@@ -13,6 +13,7 @@ import methodOverride from 'method-override'
 import logger from 'morgan'
 import categoryRouter from './routes/category.js'
 import indexRouter from './routes/index.js'
+import itemRouter from './routes/item.js'
 
 const app: Application = express()
 
@@ -56,6 +57,7 @@ app.use(express.static(resolve(__dirname, 'public')))
 // Routes
 app.use('/', indexRouter)
 app.use('/categories', categoryRouter)
+app.use('/items', itemRouter)
 
 // Catch 404 and forward to error handler
 const handle404: RequestHandler = (_req, _res, next): void => {
