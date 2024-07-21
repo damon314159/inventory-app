@@ -6,11 +6,19 @@ const categoryIndex: RequestHandler = async (
   _req: Request,
   res: Response
 ): Promise<void> => {
-  res.render('categories/index', {
-    categories: await categoryService.readCategories({}),
-    errors: null,
-    searchValue: '',
-  })
+  try {
+    res.render('categories/index', {
+      categories: await categoryService.readCategories({}),
+      errors: null,
+      searchValue: '',
+    })
+  } catch (err) {
+    res.render('categories/index', {
+      categories: null,
+      errors: [err],
+      searchValue: '',
+    })
+  }
 }
 
 const createCategory: RequestHandler = async (
@@ -57,7 +65,7 @@ const readCategories: RequestHandler = async (
     const categories = await categoryService.readCategories({
       createdAt: createdAt ? new Date(createdAt) : undefined,
       description,
-      id: Number(id),
+      id: id ? Number(id) : undefined,
       name,
       updatedAt: updatedAt ? new Date(updatedAt) : undefined,
       url,
@@ -81,25 +89,38 @@ const readCategory: RequestHandler = async (
   res: Response
 ): Promise<void> => {
   try {
+    const { id, name, description, url, createdAt, updatedAt } =
+      req.query as Record<string, string | undefined> // This cast means that path?id=one&id=two will fail
+
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      // TODO: render the form again with the errors and existing data
+      res.render('categories/index', {
+        categories: null,
+        errors,
+        searchValue: name,
+      })
       return
     }
 
-    const { id, name, description, url, createdAt, updatedAt } =
-      req.query as Record<string, string | undefined> // This cast means that path?id=one&id=two will fail
     const category = await categoryService.readCategory({
       createdAt: createdAt ? new Date(createdAt) : undefined,
       description,
-      id: Number(id),
+      id: id ? Number(id) : undefined,
       name,
       updatedAt: updatedAt ? new Date(updatedAt) : undefined,
       url,
     })
-    // TODO: render some sort of success view
+    res.render('categories/index', {
+      categories: [category],
+      errors: null,
+      searchValue: name,
+    })
   } catch (err) {
-    // TODO: render error view
+    res.render('categories/index', {
+      categories: null,
+      errors: [err],
+      searchValue: '',
+    })
   }
 }
 
