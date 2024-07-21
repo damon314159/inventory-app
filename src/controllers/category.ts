@@ -25,7 +25,10 @@ const getCreateCategory: RequestHandler = (
   req: Request,
   res: Response
 ): void => {
-  res.render('categories/create', { errors: null, formData: null })
+  res.render('categories/create', {
+    errors: null,
+    formData: { description: '', name: '' },
+  })
 }
 
 const createCategory: RequestHandler = async (
