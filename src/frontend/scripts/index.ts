@@ -1,2 +1,1 @@
-// eslint-disable-next-line no-console
-console.log('Client code is working')
+document.body.classList.add('js-enabled')
