@@ -1,11 +1,11 @@
 <div class="search-bar">
-  <form action="<%= searchAction %>" method="GET" class="search-form">
+  <form action="<%= locals.searchAction %>" method="GET" class="search-form">
     <div class="input-wrapper">
-      <input type="text" name="<%= field %>" value="<%= value %>" class="search-field" placeholder="Search..." autocomplete="off">
+      <input type="text" name="<%= locals.field %>" value="<%= locals.value %>" class="search-field" placeholder="Search..." autocomplete="off">
       <button type="submit" class="search-icon">
         <img src="/assets/images/magnify.svg" alt="search-icon"></img>
       </button>
     </div>
-    <%- include('errors',{ errors }); -%>
+    <%- include('errors',{ errors: locals.errors }); -%>
   </form>
 </div>

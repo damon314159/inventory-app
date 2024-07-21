@@ -13,18 +13,18 @@
       <%- include('../components/searchBar', { 
         searchAction: '/categories/find', 
         field: 'name', 
-        value: searchValue,
-        errors
+        value: locals.searchValue,
+        errors: locals.errors
       }); -%>
       <div class="category-grid">
-        <% if (categories && categories.length > 0) { %>
+        <% if (locals.categories && categories.length > 0) { %>
         <% categories.forEach(function(category) { %>
         <div class="category-item">
           <h3><%= category.name %></h3>
           <p><%= category.description %></p>
           <div class="actions">
             <a href="/categories/edit/<%= category.id %>" class="btn btn-secondary">Edit</a>
-            <a href="#delete" class="btn btn-danger">Delete</a>
+            <a href="/categories/delete/<%= category.id %>" class="btn btn-danger">Delete</a>
           </div>
         </div>
         <% }) %>

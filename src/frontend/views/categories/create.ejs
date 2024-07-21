@@ -7,7 +7,7 @@
   <main class="add-category">
     <section class="create-section">
       <div class="container">
-        <% if (success) { %>
+        <% if (locals.success) { %>
         <div class="success-message">
           <h1>Category Created Successfully!</h1>
           <p>Your new category has been added. You can go back to the <a href="/categories" class="link link-primary">categories list</a>.</p>
@@ -18,13 +18,13 @@
         <form action="/categories/create" method="POST" class="category-form">
           <div class="form-group">
             <label for="name">Category Name *</label>
-            <input type="text" id="name" name="name" value="<%= formData.name %>" placeholder="Enter category name" autocomplete="off" required />
+            <input type="text" id="name" name="name" value="<%= locals.formData?.name %>" placeholder="Enter category name" autocomplete="off" required />
           </div>
           <div class="form-group">
             <label for="description">Description</label>
-            <textarea id="description" name="description" placeholder="Enter description" autocomplete="off" rows="4"><%= formData.description %></textarea>
+            <textarea id="description" name="description" placeholder="Enter description" autocomplete="off" rows="4"><%= locals.formData?.description %></textarea>
           </div>
-          <%- include('../components/errors', { errors }) -%>
+          <%- include('../components/errors', { errors: locals.errors }) -%>
           <div class="button-panel">
             <button type="submit" class="btn btn-primary">Create Category</button>
             <a href="/categories" class="btn btn-danger">Cancel</a>
