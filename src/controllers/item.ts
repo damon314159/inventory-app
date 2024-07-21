@@ -59,9 +59,9 @@ const readItems: RequestHandler = async (
       description,
       price,
       stock,
-      categoryId,
-      createdAt,
-      updatedAt,
+      'category-id': categoryId,
+      'created-at': createdAt,
+      'updated-at': updatedAt,
     } = req.query as Record<string, string | undefined> // This cast means that path?id=one&id=two will fail
 
     const errors = validationResult(req)
@@ -100,9 +100,9 @@ const readItem: RequestHandler = async (
       description,
       price,
       stock,
-      categoryId,
-      createdAt,
-      updatedAt,
+      'category-id': categoryId,
+      'created-at': createdAt,
+      'updated-at': updatedAt,
     } = req.query as Record<string, string | undefined> // This cast means that path?id=one&id=two will fail
 
     const errors = validationResult(req)

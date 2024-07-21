@@ -110,9 +110,9 @@ const createValidateReadItems = (): ValidationChain[] => [
   descriptionOptional(query),
   priceOptional(query),
   stockOptional(query),
-  categoryIdOptional(query),
-  createdAtOptional(query),
-  updatedAtOptional(query),
+  categoryIdOptional(query, 'category-id'),
+  createdAtOptional(query, 'created-at'),
+  updatedAtOptional(query, 'updated-at'),
 ]
 const validateReadItems = createValidateReadItems()
 const validateReadItem = createValidateReadItems()

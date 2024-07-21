@@ -50,10 +50,13 @@ const readCategories: RequestHandler = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { id, name, description, createdAt, updatedAt } = req.query as Record<
-      string,
-      string | undefined
-    > // This cast means that path?id=one&id=two will fail
+    const {
+      id,
+      name,
+      description,
+      'created-at': createdAt,
+      'updated-at': updatedAt,
+    } = req.query as Record<string, string | undefined> // This cast means that path?id=one&id=two will fail
 
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -82,10 +85,13 @@ const readCategory: RequestHandler = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { id, name, description, createdAt, updatedAt } = req.query as Record<
-      string,
-      string | undefined
-    > // This cast means that path?id=one&id=two will fail
+    const {
+      id,
+      name,
+      description,
+      'created-at': createdAt,
+      'updated-at': updatedAt,
+    } = req.query as Record<string, string | undefined> // This cast means that path?id=one&id=two will fail
 
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
