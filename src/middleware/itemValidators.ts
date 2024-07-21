@@ -1,7 +1,7 @@
 import { body, param, query } from 'express-validator'
 import type { ValidationChain } from 'express-validator'
 
-// First, construct a set of base validators for each column in the category table
+// First, construct a set of base validators for each column in the item table
 // Secondly, create optional variants of each column
 // Lastly, for each route that needs validation, combine the appropriate set of base validators
 
@@ -47,6 +47,38 @@ const descriptionOptional = (
   field = 'description'
 ): ValidationChain => description(location, field).optional()
 
+const price = (location = body, field = 'price'): ValidationChain =>
+  location(field)
+    .escape()
+    .exists({ checkNull: true })
+    .withMessage('Price must be provided')
+    .isFloat({ min: 0 })
+    .withMessage('Price must be a number greater than or equal to 0')
+const priceOptional = (location = body, field = 'price'): ValidationChain =>
+  price(location, field).optional()
+
+const stock = (location = body, field = 'stock'): ValidationChain =>
+  location(field)
+    .escape()
+    .exists({ checkNull: true })
+    .withMessage('Stock must be provided')
+    .isInt({ min: 0 })
+    .withMessage('Stock must be an integer greater than or equal to 0')
+const stockOptional = (location = body, field = 'stock'): ValidationChain =>
+  stock(location, field).optional()
+
+const categoryId = (location = body, field = 'categoryId'): ValidationChain =>
+  location(field)
+    .escape()
+    .exists({ checkFalsy: true, checkNull: true })
+    .withMessage('Category ID must be provided')
+    .isInt({ gt: 0 })
+    .withMessage('Category ID must be an integer greater than 0')
+const categoryIdOptional = (
+  location = body,
+  field = 'categoryId'
+): ValidationChain => categoryId(location, field).optional()
+
 const createdAt = (location = body, field = 'createdAt'): ValidationChain =>
   location(field).escape().isDate()
 const createdAtOptional = (
@@ -63,38 +95,47 @@ const updatedAtOptional = (
 
 // Route validators
 
-const validateCreateCategory: ValidationChain[] = [
+const validateCreateItem: ValidationChain[] = [
   name(),
   descriptionOptional(),
+  price(),
+  stock(),
+  categoryId(),
 ]
 
-// Read category and categories are the same structure, so we can abstract
-const createValidateReadCategories = (): ValidationChain[] => [
+// Read item and items are the same structure, so we can abstract
+const createValidateReadItems = (): ValidationChain[] => [
   idOptional(query),
   nameOptional(query),
   descriptionOptional(query),
+  priceOptional(query),
+  stockOptional(query),
+  categoryIdOptional(query),
   createdAtOptional(query),
   updatedAtOptional(query),
 ]
-const validateReadCategories = createValidateReadCategories()
-const validateReadCategory = createValidateReadCategories()
+const validateReadItems = createValidateReadItems()
+const validateReadItem = createValidateReadItems()
 
-const validateGetUpdateCategory: ValidationChain[] = [id(param)]
-const validateUpdateCategory: ValidationChain[] = [
+const validateGetUpdateItem: ValidationChain[] = [id(param)]
+const validateUpdateItem: ValidationChain[] = [
   id(param),
   nameOptional(),
   descriptionOptional(),
+  priceOptional(),
+  stockOptional(),
+  categoryIdOptional(),
 ]
 
-const validateGetDeleteCategory: ValidationChain[] = [id(param)]
-const validateDeleteCategory: ValidationChain[] = [id(param)]
+const validateGetDeleteItem: ValidationChain[] = [id(param)]
+const validateDeleteItem: ValidationChain[] = [id(param)]
 
 export {
-  validateCreateCategory,
-  validateDeleteCategory,
-  validateGetDeleteCategory,
-  validateGetUpdateCategory,
-  validateReadCategories,
-  validateReadCategory,
-  validateUpdateCategory,
+  validateCreateItem,
+  validateDeleteItem,
+  validateGetDeleteItem,
+  validateGetUpdateItem,
+  validateReadItem,
+  validateReadItems,
+  validateUpdateItem,
 }

@@ -185,7 +185,7 @@ const updateCategory: RequestHandler = async (
       data: { description, name },
       id: Number(id),
     })
-    res.render('categories/edit', { id, name: category.name, success: true })
+    res.render('categories/edit', { success: true })
   } catch (err) {
     res.render('categories/edit', { errors: [err] })
   }
