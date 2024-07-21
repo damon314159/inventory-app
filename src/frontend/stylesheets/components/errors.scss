@@ -1,0 +1,13 @@
+.error-messages {
+  margin-top: 0.5rem;
+
+  .error-message {
+    background-color: var(--red-lightened);
+    color: var(--grey-dark);
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+    border: 1px solid var(--red);
+  }
+}
