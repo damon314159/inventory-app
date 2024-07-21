@@ -21,6 +21,13 @@ const categoryIndex: RequestHandler = async (
   }
 }
 
+const getCreateCategory: RequestHandler = (
+  req: Request,
+  res: Response
+): void => {
+  res.render('categories/create', { errors: null, formData: null })
+}
+
 const createCategory: RequestHandler = async (
   req: Request,
   res: Response
@@ -172,6 +179,7 @@ export {
   categoryIndex,
   createCategory,
   deleteCategory,
+  getCreateCategory,
   readCategories,
   readCategory,
   updateCategory,
