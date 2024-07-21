@@ -47,7 +47,7 @@ const CreateCategoryService: CreateService<CategoryService> = ({
   }: CreateCategoryParams): Promise<Category | null> =>
     (
       await query(
-        'INSET INTO category(name, description) VALUES($1, $2, $3) RETURNING *',
+        'INSERT INTO category(name, description) VALUES($1, $2) RETURNING *',
         [name, description || null]
       )
     ).rows.map(camelCaseQueryResult)[0] ?? null

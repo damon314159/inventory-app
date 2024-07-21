@@ -67,7 +67,7 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
     return (
       (
         await query(
-          'INSET INTO item(name, description, price, stock, category_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *',
+          'INSERT INTO item(name, description, price, stock, category_id) VALUES($1, $2, $3, $4, $5) RETURNING *',
           [name, description || null, price, stock, categoryId]
         )
       ).rows.map(camelCaseQueryResult)[0] ?? null
