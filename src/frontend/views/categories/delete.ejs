@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<%- include('../components/head'); -%>
+
+<body>
+  <%- include('../components/header'); -%>
+  <main class="delete-category">
+    <section class="form-section">
+      <div class="container">
+        <% if (locals.success) { %>
+        <div class="success-message">
+          <h1>Category Deleted Successfully!</h1>
+          <p>Your category has been deleted. You can go back to the <a href="/categories" class="link link-primary">categories list</a>.</p>
+          <a href="/categories" class="btn btn-primary">Back to Categories</a>
+        </div>
+        <% } else { %>
+        <h1>Delete Category</h1>
+        <form action="/categories/delete/<%= locals.id ?? -1 %>?_method=delete" method="POST" class="delete-form">
+          <p>Are you sure you want to delete the category "<%= locals.name %>"?</p>
+          <div class="button-panel">
+            <button type="submit" class="btn btn-danger">Delete Category</button>
+            <a href="/categories" class="btn btn-secondary">Cancel</a>
+          </div>
+        </form>
+        <% } %>
+      </div>
+    </section>
+  </main>
+  <%- include('../components/footer'); -%>
+</body>
+
+</html>
