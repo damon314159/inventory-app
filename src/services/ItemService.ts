@@ -87,7 +87,10 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
       .map((key, i): string => `${camelToSnake(key)} = $${i + 1}`)
       .join(' AND ')
     return (
-      await query(`SELECT * FROM item WHERE ${whereClause}`, vals)
+      await query(
+        `SELECT * FROM item${whereClause ? ` WHERE ${whereClause}` : ''}`,
+        vals
+      )
     ).rows.map(camelCaseQueryResult)
   }
 

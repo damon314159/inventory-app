@@ -69,7 +69,10 @@ const CreateCategoryService: CreateService<CategoryService> = ({
       .map((key, i): string => `${camelToSnake(key)} = $${i + 1}`)
       .join(' AND ')
     return (
-      await query(`SELECT * FROM category WHERE ${whereClause}`, vals)
+      await query(
+        `SELECT * FROM category${whereClause ? ` WHERE ${whereClause}` : ''}`,
+        vals
+      )
     ).rows.map(camelCaseQueryResult)
   }
 
