@@ -1,10 +1,17 @@
 <div class="search-bar">
   <form action="<%= searchAction %>" method="GET" class="search-form">
     <div class="input-wrapper">
-      <input type="text" name="<%= field %>" class="search-field" placeholder="Search Categories..." autocomplete="off">
+      <input type="text" name="<%= field %>" value="<%= value %>" class="search-field" placeholder="Search..." autocomplete="off">
       <button type="submit" class="search-icon">
         <img src="/assets/images/magnify.svg" alt="search-icon"></img>
       </button>
     </div>
+    <% if (errors && errors.length > 0) { %>
+    <div class="error-messages">
+      <% errors.forEach(function(error) { %>
+      <div class="error-message"><%= error.message || error.msg %></div>
+      <% }) %>
+    </div>
+    <% } %>
   </form>
 </div>

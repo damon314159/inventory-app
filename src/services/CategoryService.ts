@@ -1,5 +1,6 @@
 import accessorsInstance from '../db/index.js'
 import { camelToSnake, snakeToCamel } from '../utils/index.js'
+import filterNullish from '../utils/objectFilterNullish.js'
 import type {
   Category,
   CategoryQuery,
@@ -56,8 +57,9 @@ const CreateCategoryService: CreateService<CategoryService> = ({
   const readCategories = async (
     matcher: ReadCategoryParams
   ): Promise<Category[]> => {
-    const keys = Object.keys(matcher)
-    const vals = Object.values(matcher)
+    const nonNullMatcher: Partial<typeof matcher> = filterNullish(matcher)
+    const keys = Object.keys(nonNullMatcher)
+    const vals = Object.values(nonNullMatcher)
 
     const isSafe = keys.every((key): boolean => columns.has(key as never))
     if (!isSafe) {
@@ -66,10 +68,15 @@ const CreateCategoryService: CreateService<CategoryService> = ({
       )
     }
     const whereClause: string = keys
-      .map((key, i): string => `${camelToSnake(key)} = $${i + 1}`)
+      .map(
+        (key, i): string => `position($${i + 1} in ${camelToSnake(key)}) > 0`
+      )
       .join(' AND ')
     return (
-      await query(`SELECT * FROM category WHERE ${whereClause}`, vals)
+      await query(
+        `SELECT * FROM category${whereClause ? ` WHERE ${whereClause}` : ''}`,
+        vals
+      )
     ).rows.map(camelCaseQueryResult)
   }
 
@@ -89,8 +96,9 @@ const CreateCategoryService: CreateService<CategoryService> = ({
     id,
     data,
   }: UpdateCategoryParams): Promise<Category | null> => {
-    const keys = Object.keys(data)
-    const vals = Object.values(data)
+    const nonNullData: Partial<typeof data> = filterNullish(data)
+    const keys = Object.keys(nonNullData)
+    const vals = Object.values(nonNullData)
 
     const isSafe = keys.every((key): boolean =>
       modifiableColumns.has(key as never)

@@ -10,25 +10,25 @@
       <a href="#add-category" class="btn btn-primary">Add New Category</a>
     </section>
     <section class="category-list">
-      <%- include('../components/searchBar',{searchAction:'./read-many', field:'name'}); -%>
+      <%- include('../components/searchBar', { 
+        searchAction: '/categories/find', 
+        field: 'name', 
+        value: searchValue,
+        errors
+      }); -%>
       <div class="category-grid">
+        <% if (categories && categories.length > 0) { %>
+        <% categories.forEach(function(category) { %>
         <div class="category-item">
-          <h3>Category 1</h3>
-          <p>Description for Category 1.</p>
+          <h3><%= category.name %></h3>
+          <p><%= category.description %></p>
           <div class="actions">
             <a href="#edit" class="btn btn-secondary">Edit</a>
             <a href="#delete" class="btn btn-danger">Delete</a>
           </div>
         </div>
-        <div class="category-item">
-          <h3>Category 2</h3>
-          <p>Description for Category 2.</p>
-          <div class="actions">
-            <a href="#edit" class="btn btn-secondary">Edit</a>
-            <a href="#delete" class="btn btn-danger">Delete</a>
-          </div>
-        </div>
-        <!-- More categories can be added here -->
+        <% }) %>
+        <% } %>
       </div>
     </section>
   </main>
