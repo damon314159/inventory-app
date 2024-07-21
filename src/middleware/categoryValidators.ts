@@ -82,8 +82,8 @@ const validateReadCategory = createValidateReadCategories()
 const validateGetUpdateCategory: ValidationChain[] = [id(param)]
 const validateUpdateCategory: ValidationChain[] = [
   id(param),
-  nameOptional(body),
-  descriptionOptional(body),
+  nameOptional(),
+  descriptionOptional(),
 ]
 
 const validateGetDeleteCategory: ValidationChain[] = [id(param)]
