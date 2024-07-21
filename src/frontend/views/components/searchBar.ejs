@@ -6,12 +6,6 @@
         <img src="/assets/images/magnify.svg" alt="search-icon"></img>
       </button>
     </div>
-    <% if (errors && errors.length > 0) { %>
-    <div class="error-messages">
-      <% errors.forEach(function(error) { %>
-      <div class="error-message"><%= error.message || error.msg %></div>
-      <% }) %>
-    </div>
-    <% } %>
+    <%- include('errors',{ errors }); -%>
   </form>
 </div>
