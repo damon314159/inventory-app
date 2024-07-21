@@ -8,7 +8,12 @@ import type { ValidationChain } from 'express-validator'
 // Base validators
 
 const id = (location = body, field = 'id'): ValidationChain =>
-  location(field).escape().isInt({ gt: 0 })
+  location(field)
+    .escape()
+    .exists({ checkFalsy: true, checkNull: true })
+    .withMessage('ID must be provided')
+    .isInt({ gt: 0 })
+    .withMessage('ID must be an integer greater than 0')
 const idOptional = (location = body, field = 'id'): ValidationChain =>
   id(location, field).optional()
 

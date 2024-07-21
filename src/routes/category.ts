@@ -28,9 +28,9 @@ router.get('/create', getCreateCategory)
 router.post('/create', validateCreateCategory, createCategory)
 router.get('/find', validateReadCategories, readCategories)
 router.get('/find-one', validateReadCategory, readCategory)
-router.get('/edit/:id', validateGetUpdateCategory, getUpdateCategory)
-router.patch('/edit/:id', validateUpdateCategory, updateCategory)
-router.get('/delete/:id', validateGetDeleteCategory, getDeleteCategory)
-router.delete('/delete/:id', validateDeleteCategory, deleteCategory)
+router.get('/edit/:id?', validateGetUpdateCategory, getUpdateCategory)
+router.patch('/edit/:id?', validateUpdateCategory, updateCategory)
+router.get('/delete/:id?', validateGetDeleteCategory, getDeleteCategory)
+router.delete('/delete/:id?', validateDeleteCategory, deleteCategory)
 
 export default router
