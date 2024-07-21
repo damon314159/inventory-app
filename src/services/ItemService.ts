@@ -1,5 +1,6 @@
 import accessorsInstance from '../db/index.js'
 import { camelToSnake, snakeToCamel } from '../utils/index.js'
+import filterNullish from '../utils/objectFilterNullish.js'
 import categoryServiceInstance from './CategoryService.js'
 import type {
   CreateItemParams,
@@ -76,15 +77,18 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
   }
 
   const readItems = async (matcher: ReadItemParams): Promise<Item[]> => {
-    const keys = Object.keys(matcher)
-    const vals = Object.values(matcher)
+    const nonNullMatcher: Partial<typeof matcher> = filterNullish(matcher)
+    const keys = Object.keys(nonNullMatcher)
+    const vals = Object.values(nonNullMatcher)
 
     const isSafe = keys.every((key): boolean => columns.has(key as never))
     if (!isSafe) {
       throw new Error('Matcher contained keys not present in the item table')
     }
     const whereClause: string = keys
-      .map((key, i): string => `${camelToSnake(key)} = $${i + 1}`)
+      .map(
+        (key, i): string => `position($${i + 1} in ${camelToSnake(key)}) > 0`
+      )
       .join(' AND ')
     return (
       await query(
@@ -108,8 +112,9 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
     id,
     data,
   }: UpdateItemParams): Promise<Item | null> => {
-    const keys = Object.keys(data)
-    const vals = Object.values(data)
+    const nonNullData: Partial<typeof data> = filterNullish(data)
+    const keys = Object.keys(nonNullData)
+    const vals = Object.values(nonNullData)
 
     const isSafe = keys.every((key): boolean =>
       modifiableColumns.has(key as never)
