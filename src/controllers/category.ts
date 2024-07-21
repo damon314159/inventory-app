@@ -42,7 +42,7 @@ const createCategory: RequestHandler = async (
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       res.render('categories/create', {
-        errors,
+        errors: errors.array(),
         formData: { description, name },
         success: false,
       })
@@ -78,7 +78,7 @@ const readCategories: RequestHandler = async (
     if (!errors.isEmpty()) {
       res.render('categories/index', {
         categories: null,
-        errors,
+        errors: errors.array(),
         searchValue: name,
       })
       return
@@ -119,7 +119,7 @@ const readCategory: RequestHandler = async (
     if (!errors.isEmpty()) {
       res.render('categories/index', {
         categories: null,
-        errors,
+        errors: errors.array(),
         searchValue: name,
       })
       return
@@ -146,28 +146,117 @@ const readCategory: RequestHandler = async (
   }
 }
 
+const getUpdateCategory: RequestHandler = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = req.params
+
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      res.render('categories/edit', {
+        errors: errors.array(),
+        formData: { description: '', name: '' },
+        id,
+        name: '',
+        success: false,
+      })
+      return
+    }
+
+    const category = await categoryService.readCategory({ id: Number(id) })
+    if (!category) {
+      res.render('categories/edit', {
+        errors: [new Error('No category found with this ID')],
+        formData: { description: '', name: '' },
+        id,
+        name: '',
+        success: false,
+      })
+      return
+    }
+
+    res.render('categories/edit', {
+      errors: null,
+      formData: { description: category.description, name: category.name },
+      id,
+      name: category.name,
+      success: false,
+    })
+  } catch (err) {
+    res.render('categories/edit', {
+      errors: [err],
+      formData: { description: '', name: '' },
+      id: 0,
+      name: '',
+      success: false,
+    })
+  }
+}
+
 const updateCategory: RequestHandler = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
+    const { id } = req.params
+    const { name, description } = req.body
+
     const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      // TODO: render the form again with the errors and existing data
+    if (errors.mapped().id) {
+      res.render('categories/edit', {
+        errors: [errors.mapped().id],
+        formData: { description, name },
+        id,
+        name: '',
+        success: false,
+      })
       return
     }
 
-    const { id } = req.params
-    const { data } = req.body
-    const { name, description } = data ?? {}
+    const category = await categoryService.readCategory({ id: Number(id) })
+    if (!category) {
+      res.render('categories/edit', {
+        errors: [new Error('No category found with this ID')],
+        formData: { description: '', name: '' },
+        id,
+        name: '',
+        success: false,
+      })
+      return
+    }
 
-    const category = await categoryService.updateCategory({
+    if (!errors.isEmpty()) {
+      res.render('categories/edit', {
+        errors: errors.array(),
+        formData: { description, name },
+        id,
+        name: category.name,
+        success: false,
+      })
+      return
+    }
+
+    await categoryService.updateCategory({
       data: { description, name },
       id: Number(id),
     })
-    // TODO: render some sort of success view
+    res.render('categories/edit', {
+      errors: null,
+      formData: { description: '', name: '' },
+      id,
+      name: category.name,
+      success: true,
+    })
   } catch (err) {
-    // TODO: render error view
+    res.render('categories/edit', {
+      errors: [err],
+      formData: { description: '', name: '' },
+      id: 0,
+      name: '',
+      success: false,
+    })
   }
 }
 
@@ -195,6 +284,7 @@ export {
   createCategory,
   deleteCategory,
   getCreateCategory,
+  getUpdateCategory,
   readCategories,
   readCategory,
   updateCategory,

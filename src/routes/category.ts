@@ -4,6 +4,7 @@ import {
   createCategory,
   deleteCategory,
   getCreateCategory,
+  getUpdateCategory,
   readCategories,
   readCategory,
   updateCategory,
@@ -11,6 +12,7 @@ import {
 import {
   validateCreateCategory,
   validateDeleteCategory,
+  validateGetUpdateCategory,
   validateReadCategories,
   validateReadCategory,
   validateUpdateCategory,
@@ -24,7 +26,8 @@ router.get('/create', getCreateCategory)
 router.post('/create', validateCreateCategory, createCategory)
 router.get('/find', validateReadCategories, readCategories)
 router.get('/find-one', validateReadCategory, readCategory)
-router.patch('/update/:id', validateUpdateCategory, updateCategory)
+router.get('/edit/:id', validateGetUpdateCategory, getUpdateCategory)
+router.patch('/edit/:id', validateUpdateCategory, updateCategory)
 router.delete('/delete/:id', validateDeleteCategory, deleteCategory)
 
 export default router

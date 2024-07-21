@@ -84,9 +84,14 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
       throw new Error('Matcher contained keys not present in the item table')
     }
     const whereClause: string = keys
-      .map(
-        (key, i): string => `position($${i + 1} in ${camelToSnake(key)}) > 0`
-      )
+      .map((key, i): string => {
+        switch (typeof vals[i]) {
+          case 'string':
+            return `position($${i + 1} in ${camelToSnake(key)}) > 0`
+          default:
+            return `${camelToSnake(key)} = $${i + 1}`
+        }
+      })
       .join(' AND ')
     return (
       await query(

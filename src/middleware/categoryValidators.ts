@@ -74,10 +74,11 @@ const createValidateReadCategories = (): ValidationChain[] => [
 const validateReadCategories = createValidateReadCategories()
 const validateReadCategory = createValidateReadCategories()
 
+const validateGetUpdateCategory: ValidationChain[] = [id(param)]
 const validateUpdateCategory: ValidationChain[] = [
   id(param),
-  nameOptional(body, 'data.name'),
-  descriptionOptional(body, 'data.description'),
+  nameOptional(body),
+  descriptionOptional(body),
 ]
 
 const validateDeleteCategory: ValidationChain[] = [id(param)]
@@ -85,6 +86,7 @@ const validateDeleteCategory: ValidationChain[] = [id(param)]
 export {
   validateCreateCategory,
   validateDeleteCategory,
+  validateGetUpdateCategory,
   validateReadCategories,
   validateReadCategory,
   validateUpdateCategory,
