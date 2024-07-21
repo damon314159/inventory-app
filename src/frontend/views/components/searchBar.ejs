@@ -1,3 +1,10 @@
 <div class="search-bar">
-  <input type="text" placeholder="Search Categories..." class="search-field" />
+  <form action="<%= searchAction %>" method="GET" class="search-form">
+    <div class="input-wrapper">
+      <input type="text" name="<%= field %>" class="search-field" placeholder="Search Categories..." autocomplete="off">
+      <button type="submit" class="search-icon">
+        <img src="/assets/images/magnify.svg" alt="search-icon"></img>
+      </button>
+    </div>
+  </form>
 </div>

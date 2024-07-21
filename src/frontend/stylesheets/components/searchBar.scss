@@ -2,10 +2,18 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  .search-field {
+
+  .search-form {
     width: 100%;
     max-width: 600px;
-    padding: 0.75rem 1rem;
+    position: relative;
+  }
+  .input-wrapper {
+    position: relative;
+  }
+  .search-field {
+    width: 100%;
+    padding: 0.75rem 3rem 0.75rem 1rem;
     border: 2px solid var(--navy);
     color: var(--navy-lightened);
     border-radius: 0.5rem;
@@ -14,6 +22,27 @@
     &:focus {
       border-color: var(--purple);
       outline: none;
+    }
+  }
+
+  .search-icon {
+    height: 1.5rem;
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--navy-lightened);
+    cursor: pointer;
+    padding: 0;
+    &:hover {
+      filter: invert(17%) sepia(76%) saturate(3196%) hue-rotate(278deg)
+        brightness(99%) contrast(134%);
+    }
+    img {
+      height: 1.5rem;
+      width: auto;
     }
   }
 }

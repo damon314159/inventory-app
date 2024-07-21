@@ -10,7 +10,7 @@
       <a href="#add-category" class="btn btn-primary">Add New Category</a>
     </section>
     <section class="category-list">
-      <%- include('../components/searchBar'); -%>
+      <%- include('../components/searchBar',{searchAction:'./read-many', field:'name'}); -%>
       <div class="category-grid">
         <div class="category-item">
           <h3>Category 1</h3>
