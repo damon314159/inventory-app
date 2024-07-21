@@ -16,6 +16,7 @@
         value: locals.searchValue,
         errors: locals.errors
       }); -%>
+      <%- include('../components/errors', { errors: locals.errors }) -%>
       <div class="category-grid">
         <% if (locals.categories && categories.length > 0) { %>
         <% categories.forEach(function(category) { %>

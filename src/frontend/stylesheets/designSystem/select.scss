@@ -1,0 +1,22 @@
+select {
+  padding: 0.5rem;
+  border: 1px solid var(--navy);
+  border-radius: 0.25rem;
+  background-color: var(--white);
+  color: var(--navy);
+  font-size: 1rem;
+  outline: none;
+  width: 18rem;
+  transition:
+    border-color 0.3s,
+    background-color 0.3s;
+
+  @media (max-width: 600px) {
+    width: 100%;
+    font-size: 0.875rem;
+  }
+
+  &:focus {
+    border-color: var(--primary);
+  }
+}
