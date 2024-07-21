@@ -1,6 +1,6 @@
 .add-category {
   .create-section {
-    padding: 2rem 0;
+    padding: 2rem;
   }
   .container {
     max-width: 600px;
@@ -70,9 +70,23 @@
       }
     }
 
-    button {
-      margin-top: 1rem;
+    .error-messages {
+      padding-bottom: 1rem;
+    }
+
+    .button-panel {
+      display: flex;
+      width: 80%;
       align-self: center;
+      gap: 1rem;
+      justify-content: center;
+      button,
+      a {
+        flex: 1 1 0;
+      }
+      @media (max-width: 500px) {
+        width: 100%;
+      }
     }
   }
 }

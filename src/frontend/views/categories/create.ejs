@@ -25,7 +25,10 @@
             <textarea id="description" name="description" placeholder="Enter description" autocomplete="off" rows="4"><%= formData.description %></textarea>
           </div>
           <%- include('../components/errors', { errors }) -%>
-          <button type="submit" class="btn btn-primary">Create Category</button>
+          <div class="button-panel">
+            <button type="submit" class="btn btn-primary">Create Category</button>
+            <a href="/categories" class="btn btn-danger">Cancel</a>
+          </div>
         </form>
         <% } %>
       </div>
