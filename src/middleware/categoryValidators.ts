@@ -73,8 +73,8 @@ const createValidateReadCategories = (): ValidationChain[] => [
   idOptional(query),
   nameOptional(query),
   descriptionOptional(query),
-  createdAtOptional(query),
-  updatedAtOptional(query),
+  createdAtOptional(query, 'created-at'),
+  updatedAtOptional(query, 'updated-at'),
 ]
 const validateReadCategories = createValidateReadCategories()
 const validateReadCategory = createValidateReadCategories()
