@@ -20,8 +20,8 @@ const router = Router()
 
 router.get('/', categoryIndex)
 router.post('/create', validateCreateCategory, createCategory)
-router.get('/read-many', validateReadCategories, readCategories)
-router.get('/read', validateReadCategory, readCategory)
+router.get('/find', validateReadCategories, readCategories)
+router.get('/find-one', validateReadCategory, readCategory)
 router.patch('/update/:id', validateUpdateCategory, updateCategory)
 router.delete('/delete/:id', validateDeleteCategory, deleteCategory)
 
