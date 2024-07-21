@@ -28,6 +28,7 @@ const getCreateCategory: RequestHandler = (
   res.render('categories/create', {
     errors: null,
     formData: { description: '', name: '' },
+    success: false,
   })
 }
 
@@ -36,17 +37,30 @@ const createCategory: RequestHandler = async (
   res: Response
 ): Promise<void> => {
   try {
+    const { name, description } = req.body
+
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      // TODO: render the form again with the errors and existing data
+      res.render('categories/create', {
+        errors,
+        formData: { description, name },
+        success: false,
+      })
       return
     }
 
-    const { name, description } = req.body
-    const category = await categoryService.createCategory({ description, name })
-    // TODO: render some sort of success view
+    await categoryService.createCategory({ description, name })
+    res.render('categories/create', {
+      errors: null,
+      formData: { description: '', name: '' },
+      success: true,
+    })
   } catch (err) {
-    // TODO: render error view
+    res.render('categories/create', {
+      errors: [err],
+      formData: { description: '', name: '' },
+      success: false,
+    })
   }
 }
 
