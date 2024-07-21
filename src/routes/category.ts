@@ -3,6 +3,7 @@ import {
   categoryIndex,
   createCategory,
   deleteCategory,
+  getCreateCategory,
   readCategories,
   readCategory,
   updateCategory,
@@ -19,6 +20,7 @@ import {
 const router = Router()
 
 router.get('/', categoryIndex)
+router.get('/create', getCreateCategory)
 router.post('/create', validateCreateCategory, createCategory)
 router.get('/find', validateReadCategories, readCategories)
 router.get('/find-one', validateReadCategory, readCategory)

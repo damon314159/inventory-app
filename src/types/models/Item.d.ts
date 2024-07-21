@@ -2,7 +2,6 @@ export interface Item {
   id: number
   name: string
   description?: string
-  url: string
   price: number
   stock: number
   categoryId: number
@@ -14,7 +13,6 @@ export interface ItemQuery {
   id: number
   name: string
   description?: string
-  url: string
   price: number
   stock: number
   category_id: number

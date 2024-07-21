@@ -21,26 +21,46 @@ const categoryIndex: RequestHandler = async (
   }
 }
 
+const getCreateCategory: RequestHandler = (
+  req: Request,
+  res: Response
+): void => {
+  res.render('categories/create', {
+    errors: null,
+    formData: { description: '', name: '' },
+    success: false,
+  })
+}
+
 const createCategory: RequestHandler = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
+    const { name, description } = req.body
+
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      // TODO: render the form again with the errors and existing data
+      res.render('categories/create', {
+        errors,
+        formData: { description, name },
+        success: false,
+      })
       return
     }
 
-    const { name, description, url } = req.body
-    const category = await categoryService.createCategory({
-      description,
-      name,
-      url,
+    await categoryService.createCategory({ description, name })
+    res.render('categories/create', {
+      errors: null,
+      formData: { description: '', name: '' },
+      success: true,
     })
-    // TODO: render some sort of success view
   } catch (err) {
-    // TODO: render error view
+    res.render('categories/create', {
+      errors: [err],
+      formData: { description: '', name: '' },
+      success: false,
+    })
   }
 }
 
@@ -49,8 +69,10 @@ const readCategories: RequestHandler = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { id, name, description, url, createdAt, updatedAt } =
-      req.query as Record<string, string | undefined> // This cast means that path?id=one&id=two will fail
+    const { id, name, description, createdAt, updatedAt } = req.query as Record<
+      string,
+      string | undefined
+    > // This cast means that path?id=one&id=two will fail
 
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -68,7 +90,6 @@ const readCategories: RequestHandler = async (
       id: id ? Number(id) : undefined,
       name,
       updatedAt: updatedAt ? new Date(updatedAt) : undefined,
-      url,
     })
     res.render('categories/index', {
       categories,
@@ -89,8 +110,10 @@ const readCategory: RequestHandler = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { id, name, description, url, createdAt, updatedAt } =
-      req.query as Record<string, string | undefined> // This cast means that path?id=one&id=two will fail
+    const { id, name, description, createdAt, updatedAt } = req.query as Record<
+      string,
+      string | undefined
+    > // This cast means that path?id=one&id=two will fail
 
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -108,7 +131,6 @@ const readCategory: RequestHandler = async (
       id: id ? Number(id) : undefined,
       name,
       updatedAt: updatedAt ? new Date(updatedAt) : undefined,
-      url,
     })
     res.render('categories/index', {
       categories: [category],
@@ -137,10 +159,10 @@ const updateCategory: RequestHandler = async (
 
     const { id } = req.params
     const { data } = req.body
-    const { name, description, url } = data ?? {}
+    const { name, description } = data ?? {}
 
     const category = await categoryService.updateCategory({
-      data: { description, name, url },
+      data: { description, name },
       id: Number(id),
     })
     // TODO: render some sort of success view
@@ -172,6 +194,7 @@ export {
   categoryIndex,
   createCategory,
   deleteCategory,
+  getCreateCategory,
   readCategories,
   readCategory,
   updateCategory,

@@ -27,7 +27,6 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
     'id',
     'name',
     'description',
-    'url',
     'price',
     'stock',
     'categoryId',
@@ -36,7 +35,7 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
   ])
   const modifiableColumns = new Set<
     keyof Omit<Item, 'id' | 'createdAt' | 'updatedAt'>
-  >(['name', 'description', 'url', 'price', 'stock', 'categoryId'])
+  >(['name', 'description', 'price', 'stock', 'categoryId'])
 
   const camelCaseQueryResult = (item: ItemQuery): Item =>
     Object.fromEntries(
@@ -49,7 +48,6 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
   const createItem = async ({
     name,
     description,
-    url,
     price,
     stock,
     categoryId,
@@ -69,8 +67,8 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
     return (
       (
         await query(
-          'INSET INTO item(name, description, url, price, stock, category_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING *',
-          [name, description || null, url, price, stock, categoryId]
+          'INSERT INTO item(name, description, price, stock, category_id) VALUES($1, $2, $3, $4, $5) RETURNING *',
+          [name, description || null, price, stock, categoryId]
         )
       ).rows.map(camelCaseQueryResult)[0] ?? null
     )
