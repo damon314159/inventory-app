@@ -5,8 +5,15 @@
 <body>
   <%- include('../components/header'); -%>
   <main class="add-category">
-    <section class="form-section">
+    <section class="create-section">
       <div class="container">
+        <% if (success) { %>
+        <div class="success-message">
+          <h1>Category Created Successfully!</h1>
+          <p>Your new category has been added. You can go back to the <a href="/categories" class="link link-primary">categories list</a>.</p>
+          <a href="/categories" class="btn btn-primary">Back to Categories</a>
+        </div>
+        <% } else { %>
         <h1>Add New Category</h1>
         <form action="/categories/create" method="POST" class="category-form">
           <div class="form-group">
@@ -17,8 +24,10 @@
             <label for="description">Description</label>
             <textarea id="description" name="description" placeholder="Enter description" autocomplete="off" rows="4"><%= formData.description %></textarea>
           </div>
+          <%- include('../components/errors', { errors }) -%>
           <button type="submit" class="btn btn-primary">Create Category</button>
         </form>
+        <% } %>
       </div>
     </section>
   </main>
