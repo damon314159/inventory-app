@@ -1,5 +1,5 @@
 import type { CategoryService } from './CategoryService.js'
-import type { Item } from '../../models/index.js'
+import type { Item, ItemJoinCategory } from '../../models/index.js'
 import type { Dependencies } from '../abstract/Dependencies.js'
 import type { Service } from '../abstract/Service.js'
 
@@ -18,8 +18,8 @@ interface DeleteItemParams {
 
 interface ItemService extends Service {
   createItem: (params: CreateItemParams) => Promise<Item | null>
-  readItems: (params: ReadItemParams) => Promise<Item[]>
-  readItem: (params: ReadItemParams) => Promise<Item | null>
+  readItems: (params: ReadItemParams) => Promise<ItemJoinCategory[]>
+  readItem: (params: ReadItemParams) => Promise<ItemJoinCategory | null>
   updateItem: (params: UpdateItemParams) => Promise<Item | null>
   deleteItem: (params: DeleteItemParams) => Promise<void>
 }
