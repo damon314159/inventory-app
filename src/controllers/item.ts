@@ -1,4 +1,5 @@
 import { validationResult } from 'express-validator'
+import categoryService from '../services/CategoryService.js'
 import itemService from '../services/ItemService.js'
 import type { Request, RequestHandler, Response } from 'express'
 
@@ -8,6 +9,7 @@ const itemIndex: RequestHandler = async (
 ): Promise<void> => {
   try {
     res.render('items/index', {
+      categories: await categoryService.readCategories({}),
       items: await itemService.readItems({}),
     })
   } catch (err) {
@@ -15,8 +17,17 @@ const itemIndex: RequestHandler = async (
   }
 }
 
-const getCreateItem: RequestHandler = (_req: Request, res: Response): void => {
-  res.render('items/create')
+const getCreateItem: RequestHandler = async (
+  _req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    res.render('items/create', {
+      categories: await categoryService.readCategories({}),
+    })
+  } catch (err) {
+    res.render('items/create', { errors: [err] })
+  }
 }
 
 const createItem: RequestHandler = async (
@@ -29,18 +40,25 @@ const createItem: RequestHandler = async (
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       res.render('items/create', {
+        categories: await categoryService.readCategories({}),
         errors: errors.array(),
-        formData: { categoryId, description, name, price, stock },
+        formData: {
+          categoryId: categoryId ? Number(categoryId) : undefined,
+          description,
+          name,
+          price,
+          stock,
+        },
       })
       return
     }
 
     await itemService.createItem({
-      categoryId,
+      categoryId: Number(categoryId),
       description,
       name,
-      price,
-      stock,
+      price: Number(price) * 100,
+      stock: Number(stock),
     })
     res.render('items/create', { success: true })
   } catch (err) {
@@ -67,7 +85,9 @@ const readItems: RequestHandler = async (
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       res.render('items/index', {
+        categories: await categoryService.readCategories({}),
         errors: errors.array(),
+        formData: { categoryId: categoryId ? Number(categoryId) : undefined },
         searchValue: name,
       })
       return
@@ -79,11 +99,16 @@ const readItems: RequestHandler = async (
       description,
       id: id ? Number(id) : undefined,
       name,
-      price: price ? Number(price) : undefined,
+      price: price ? Number(price) * 100 : undefined,
       stock: stock ? Number(stock) : undefined,
       updatedAt: updatedAt ? new Date(updatedAt) : undefined,
     })
-    res.render('items/index', { items, searchValue: name })
+    res.render('items/index', {
+      categories: await categoryService.readCategories({}),
+      formData: { categoryId: categoryId ? Number(categoryId) : undefined },
+      items,
+      searchValue: name,
+    })
   } catch (err) {
     res.render('items/index', { errors: [err] })
   }
@@ -108,7 +133,9 @@ const readItem: RequestHandler = async (
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       res.render('items/index', {
+        categories: await categoryService.readCategories({}),
         errors: errors.array(),
+        formData: { categoryId: categoryId ? Number(categoryId) : undefined },
         searchValue: name,
       })
       return
@@ -120,11 +147,16 @@ const readItem: RequestHandler = async (
       description,
       id: id ? Number(id) : undefined,
       name,
-      price: price ? Number(price) : undefined,
+      price: price ? Number(price) * 100 : undefined,
       stock: stock ? Number(stock) : undefined,
       updatedAt: updatedAt ? new Date(updatedAt) : undefined,
     })
-    res.render('items/index', { items: [item], searchValue: name })
+    res.render('items/index', {
+      categories: await categoryService.readCategories({}),
+      formData: { categoryId: categoryId ? Number(categoryId) : undefined },
+      items: [item],
+      searchValue: name,
+    })
   } catch (err) {
     res.render('items/index', { errors: [err] })
   }
@@ -154,7 +186,13 @@ const getUpdateItem: RequestHandler = async (
     const { categoryId, description, name, price, stock } = item
 
     res.render('items/edit', {
-      formData: { categoryId, description, name, price, stock },
+      formData: {
+        categoryId: categoryId ? Number(categoryId) : undefined,
+        description,
+        name,
+        price,
+        stock,
+      },
       id,
       name,
     })
@@ -175,7 +213,13 @@ const updateItem: RequestHandler = async (
     if (errors.mapped().id) {
       res.render('items/edit', {
         errors: [errors.mapped().id],
-        formData: { categoryId, description, name, price, stock },
+        formData: {
+          categoryId: categoryId ? Number(categoryId) : undefined,
+          description,
+          name,
+          price,
+          stock,
+        },
         id,
       })
       return
@@ -193,7 +237,13 @@ const updateItem: RequestHandler = async (
     if (!errors.isEmpty()) {
       res.render('items/edit', {
         errors: errors.array(),
-        formData: { categoryId, description, name, price, stock },
+        formData: {
+          categoryId: categoryId ? Number(categoryId) : undefined,
+          description,
+          name,
+          price,
+          stock,
+        },
         id,
         name: item.name,
       })

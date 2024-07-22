@@ -3,6 +3,8 @@ import type {
   Category,
   CategoryQuery,
   Item,
+  ItemJoinCategory,
+  ItemJoinCategoryQuery,
   ItemQuery,
 } from './models/index.js'
 import type {
@@ -35,6 +37,8 @@ export {
   Dependencies,
   GetClient,
   Item,
+  ItemJoinCategory,
+  ItemJoinCategoryQuery,
   ItemQuery,
   ItemService,
   ItemServiceDeps,

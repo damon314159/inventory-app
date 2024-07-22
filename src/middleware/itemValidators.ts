@@ -10,7 +10,7 @@ import type { ValidationChain } from 'express-validator'
 const id = (location = body, field = 'id'): ValidationChain =>
   location(field)
     .escape()
-    .exists({ checkFalsy: true, checkNull: true })
+    .exists({ values: 'falsy' })
     .withMessage('ID must be provided')
     .isInt({ gt: 0 })
     .withMessage('ID must be an integer greater than 0')
@@ -50,7 +50,7 @@ const descriptionOptional = (
 const price = (location = body, field = 'price'): ValidationChain =>
   location(field)
     .escape()
-    .exists({ checkNull: true })
+    .exists({ values: 'null' })
     .withMessage('Price must be provided')
     .isFloat({ min: 0 })
     .withMessage('Price must be a number greater than or equal to 0')
@@ -60,7 +60,7 @@ const priceOptional = (location = body, field = 'price'): ValidationChain =>
 const stock = (location = body, field = 'stock'): ValidationChain =>
   location(field)
     .escape()
-    .exists({ checkNull: true })
+    .exists({ values: 'null' })
     .withMessage('Stock must be provided')
     .isInt({ min: 0 })
     .withMessage('Stock must be an integer greater than or equal to 0')
@@ -70,14 +70,14 @@ const stockOptional = (location = body, field = 'stock'): ValidationChain =>
 const categoryId = (location = body, field = 'categoryId'): ValidationChain =>
   location(field)
     .escape()
-    .exists({ checkFalsy: true, checkNull: true })
+    .exists({ values: 'falsy' })
     .withMessage('Category ID must be provided')
     .isInt({ gt: 0 })
     .withMessage('Category ID must be an integer greater than 0')
 const categoryIdOptional = (
   location = body,
   field = 'categoryId'
-): ValidationChain => categoryId(location, field).optional()
+): ValidationChain => categoryId(location, field).optional({ values: 'falsy' })
 
 const createdAt = (location = body, field = 'createdAt'): ValidationChain =>
   location(field).escape().isDate()

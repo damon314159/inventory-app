@@ -69,9 +69,9 @@ const CreateCategoryService: CreateService<CategoryService> = ({
       .map((key, i): string => {
         switch (typeof vals[i]) {
           case 'string':
-            return `position($${i + 1} in ${camelToSnake(key)}) > 0`
+            return `position($${i + 1} in category.${camelToSnake(key)}) > 0`
           default:
-            return `${camelToSnake(key)} = $${i + 1}`
+            return `category.${camelToSnake(key)} = $${i + 1}`
         }
       })
       .join(' AND ')
@@ -116,7 +116,7 @@ const CreateCategoryService: CreateService<CategoryService> = ({
     }
 
     const setClause: string = keys
-      .map((key, i): string => `${camelToSnake(key)} = $${i + 1}`)
+      .map((key, i): string => `category.${camelToSnake(key)} = $${i + 1}`)
       .join(', ')
     return (
       (

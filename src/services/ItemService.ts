@@ -7,7 +7,8 @@ import type {
   CreateService,
   DeleteItemParams,
   Item,
-  ItemQuery,
+  ItemJoinCategory,
+  ItemJoinCategoryQuery,
   ItemService,
   ItemServiceDeps,
   ReadItemParams,
@@ -37,13 +38,15 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
     keyof Omit<Item, 'id' | 'createdAt' | 'updatedAt'>
   >(['name', 'description', 'price', 'stock', 'categoryId'])
 
-  const camelCaseQueryResult = (item: ItemQuery): Item =>
+  const camelCaseQueryResult = (
+    item: ItemJoinCategoryQuery
+  ): ItemJoinCategory =>
     Object.fromEntries(
       Object.entries(item).map(([key, val]): unknown[] => [
         snakeToCamel(key),
         val,
       ])
-    ) as Item
+    ) as ItemJoinCategory
 
   const createItem = async ({
     name,
@@ -74,7 +77,9 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
     )
   }
 
-  const readItems = async (matcher: ReadItemParams): Promise<Item[]> => {
+  const readItems = async (
+    matcher: ReadItemParams
+  ): Promise<ItemJoinCategory[]> => {
     const nonNullMatcher: Partial<typeof matcher> = filterNullish(matcher)
     const keys = Object.keys(nonNullMatcher)
     const vals = Object.values(nonNullMatcher)
@@ -87,22 +92,24 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
       .map((key, i): string => {
         switch (typeof vals[i]) {
           case 'string':
-            return `position($${i + 1} in ${camelToSnake(key)}) > 0`
+            return `position($${i + 1} in item.${camelToSnake(key)}) > 0`
           default:
-            return `${camelToSnake(key)} = $${i + 1}`
+            return `item.${camelToSnake(key)} = $${i + 1}`
         }
       })
       .join(' AND ')
     return (
       await query(
-        `SELECT * FROM item${whereClause ? ` WHERE ${whereClause}` : ''}`,
+        `SELECT item.*, category.name AS category_name, category.description AS category_description FROM item LEFT JOIN category ON item.category_id = category.id${whereClause ? ` WHERE ${whereClause}` : ''}`,
         vals
       )
     ).rows.map(camelCaseQueryResult)
   }
 
-  const readItem = async (matcher: ReadItemParams): Promise<Item | null> => {
-    const rows: Item[] = await readItems(matcher)
+  const readItem = async (
+    matcher: ReadItemParams
+  ): Promise<ItemJoinCategory | null> => {
+    const rows: ItemJoinCategory[] = await readItems(matcher)
     if (rows.length > 1) {
       throw new Error(
         'Several matching entries found. If this is intended, call readItems instead.'
@@ -132,7 +139,7 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
     }
 
     const setClause: string = keys
-      .map((key, i): string => `${camelToSnake(key)} = $${i + 1}`)
+      .map((key, i): string => `item.${camelToSnake(key)} = $${i + 1}`)
       .join(', ')
     return (
       (
