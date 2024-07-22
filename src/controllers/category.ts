@@ -1,4 +1,5 @@
 import { validationResult } from 'express-validator'
+import pg from 'pg'
 import categoryService from '../services/CategoryService.js'
 import type { Request, RequestHandler, Response } from 'express'
 
@@ -241,6 +242,12 @@ const deleteCategory: RequestHandler = async (
     await categoryService.deleteCategory({ id: Number(id) })
     res.render('categories/delete', { success: true })
   } catch (err) {
+    if (err instanceof pg.DatabaseError && err.code === '23503') {
+      res.render('categories/delete', {
+        errors: [new Error('Cannot delete category while it still has items.')],
+      })
+      return
+    }
     res.render('categories/delete', { errors: [err] })
   }
 }

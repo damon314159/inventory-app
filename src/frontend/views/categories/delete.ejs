@@ -17,6 +17,7 @@
         <h1>Delete Category</h1>
         <form action="/categories/delete/<%= locals.id ?? -1 %>?_method=delete" method="POST" class="delete-form">
           <p>Are you sure you want to delete the category "<%= locals.name %>"?</p>
+          <%- include('../components/errors', { errors: locals.errors }) -%>
           <div class="button-panel">
             <button type="submit" class="btn btn-danger">Delete Category</button>
             <a href="/categories" class="btn btn-secondary">Cancel</a>

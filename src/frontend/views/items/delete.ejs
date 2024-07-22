@@ -17,6 +17,7 @@
         <h1>Delete Item</h1>
         <form action="/items/delete/<%= locals.id ?? -1 %>?_method=delete" method="POST" class="delete-form">
           <p>Are you sure you want to delete the item "<%= locals.name %>"?</p>
+          <%- include('../components/errors', { errors: locals.errors }) -%>
           <div class="button-panel">
             <button type="submit" class="btn btn-danger">Delete Item</button>
             <a href="/items" class="btn btn-secondary">Cancel</a>
