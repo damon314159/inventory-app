@@ -139,7 +139,7 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
     }
 
     const setClause: string = keys
-      .map((key, i): string => `item.${camelToSnake(key)} = $${i + 1}`)
+      .map((key, i): string => `${camelToSnake(key)} = $${i + 1}`)
       .join(', ')
     return (
       (

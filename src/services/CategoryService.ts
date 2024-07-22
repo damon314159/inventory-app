@@ -116,7 +116,7 @@ const CreateCategoryService: CreateService<CategoryService> = ({
     }
 
     const setClause: string = keys
-      .map((key, i): string => `category.${camelToSnake(key)} = $${i + 1}`)
+      .map((key, i): string => `${camelToSnake(key)} = $${i + 1}`)
       .join(', ')
     return (
       (
