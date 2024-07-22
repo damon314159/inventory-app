@@ -92,9 +92,9 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
       .map((key, i): string => {
         switch (typeof vals[i]) {
           case 'string':
-            return `position($${i + 1} in ${camelToSnake(key)}) > 0`
+            return `position($${i + 1} in item.${camelToSnake(key)}) > 0`
           default:
-            return `${camelToSnake(key)} = $${i + 1}`
+            return `item.${camelToSnake(key)} = $${i + 1}`
         }
       })
       .join(' AND ')
@@ -139,7 +139,7 @@ const CreateItemService: CreateService<ItemService, ItemServiceDeps> = ({
     }
 
     const setClause: string = keys
-      .map((key, i): string => `${camelToSnake(key)} = $${i + 1}`)
+      .map((key, i): string => `item.${camelToSnake(key)} = $${i + 1}`)
       .join(', ')
     return (
       (
