@@ -1,0 +1,73 @@
+.about-page {
+  .intro-section,
+  .features-section,
+  .how-it-works-section {
+    padding: 2rem 1rem;
+    background-color: var(--off-white);
+    color: var(--navy);
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+
+      h1,
+      h2 {
+        margin-bottom: 1rem;
+        color: var(--navy);
+      }
+
+      p {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      ul,
+      ol {
+        text-align: left;
+        margin: 0 auto;
+        padding: 0 1rem;
+        max-width: 600px;
+
+        li {
+          margin-bottom: 1rem;
+          font-size: 1rem;
+
+          strong {
+            color: var(--purple);
+          }
+        }
+      }
+
+      ol {
+        counter-reset: item;
+
+        li {
+          list-style: none;
+          position: relative;
+
+          &::before {
+            counter-increment: item;
+            content: counter(item) '.';
+            position: absolute;
+            left: -2rem;
+            color: var(--purple);
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+
+  .intro-section {
+    background-color: var(--cream);
+  }
+
+  .features-section {
+    background-color: var(--pale-blue-lightened);
+  }
+
+  .how-it-works-section {
+    background-color: var(--cream);
+  }
+}

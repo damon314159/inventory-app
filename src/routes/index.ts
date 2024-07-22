@@ -9,4 +9,9 @@ const indexController: RequestHandler = (_req, res): void => {
 }
 router.get('/', indexController)
 
+const aboutController: RequestHandler = (_req, res): void => {
+  res.render('about')
+}
+router.get('/about', aboutController)
+
 export default router
