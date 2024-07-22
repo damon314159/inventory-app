@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<%- include('../components/head'); -%>
+
+<body>
+  <%- include('../components/header'); -%>
+  <main>
+    <section class="item-header">
+      <h1>Inventory Items</h1>
+      <a href="/items/create" class="btn btn-primary">Add New Item</a>
+    </section>
+    <section class="item-filter">
+      <form action="/items/find" method="get">
+        <label for="category-select">Select Category:</label>
+        <select id="category-select" name="category-id">
+          <option value="">All Categories</option>
+          <% locals.categories && categories.forEach(function(category) { %>
+          <% if (category.id === locals.formData?.categoryId) { %>
+          <option value="<%= category.id %>" selected><%= category.name %></option>
+          <% } else { %>
+          <option value="<%= category.id %>"><%= category.name %></option>
+          <% } %>
+          <% }) %>
+        </select>
+        <button type="submit" class="btn btn-secondary">Filter</button>
+      </form>
+    </section>
+    <section class="item-list">
+      <%- include('../components/searchBar', { 
+        searchAction: '/items/find', 
+        field: 'name', 
+        value: locals.searchValue,
+        errors: locals.errors
+      }); -%>
+      <div class="item-grid">
+        <% if (locals.items && items.length > 0) { %>
+        <% items.forEach(function(item) { %>
+        <div class="item">
+          <h3><%= item.name %></h3>
+          <p><%= item.description %></p>
+          <p>Stock: <%= item.stock %></p>
+          <p>Price: £<%= (item.price / 100).toFixed(2) %></p>
+          <p>Category: <%= item.categoryName %></p>
+          <div class="actions">
+            <a href="/items/edit/<%= item.id %>" class="btn btn-secondary">Edit</a>
+            <a href="/items/delete/<%= item.id %>" class="btn btn-danger">Delete</a>
+          </div>
+        </div>
+        <% }) %>
+        <% } %>
+      </div>
+    </section>
+  </main>
+  <%- include('../components/footer'); -%>
+</body>
+
+</html>

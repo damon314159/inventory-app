@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<%- include('../components/head'); -%>
+
+<body>
+  <%- include('../components/header'); -%>
+  <main class="add-item">
+    <section class="create-section">
+      <div class="container">
+        <% if (locals.success) { %>
+        <div class="success-message">
+          <h1>Item Created Successfully!</h1>
+          <p>Your new item has been added. You can go back to the <a href="/items" class="link link-primary">items list</a>.</p>
+          <a href="/items" class="btn btn-primary">Back to Items</a>
+        </div>
+        <% } else { %>
+        <h1>Add New Item</h1>
+        <form action="/items/create" method="POST" class="item-form">
+          <div class="form-group">
+            <label for="name">Item Name *</label>
+            <input type="text" id="name" name="name" value="<%= locals.formData?.name %>" placeholder="Enter item name" autocomplete="off" required />
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" placeholder="Enter description" autocomplete="off" rows="4"><%= locals.formData?.description %></textarea>
+          </div>
+          <div class="form-group">
+            <label for="price">Price *</label>
+            <input type="number" id="price" name="price" value="<%= locals.formData?.price %>" placeholder="Enter price" autocomplete="off" step="0.01" required />
+          </div>
+          <div class="form-group">
+            <label for="stock">Stock *</label>
+            <input type="number" id="stock" name="stock" value="<%= locals.formData?.stock %>" placeholder="Enter stock quantity" autocomplete="off" required />
+          </div>
+          <div class="form-group">
+            <label for="category-id">Category *</label>
+            <select id="category-id" name="categoryId" required>
+              <option value="">Select a category</option>
+              <% locals.categories && categories.forEach(function(category) { %>
+              <% if (category.id === locals.formData?.categoryId) { %>
+              <option value="<%= category.id %>" selected><%= category.name %></option>
+              <% } else { %>
+              <option value="<%= category.id %>"><%= category.name %></option>
+              <% } %>
+              <% }) %>
+            </select>
+          </div>
+          <%- include('../components/errors', { errors: locals.errors }) -%>
+          <div class="button-panel">
+            <button type="submit" class="btn btn-primary">Create Item</button>
+            <a href="/items" class="btn btn-danger">Cancel</a>
+          </div>
+        </form>
+        <% } %>
+      </div>
+    </section>
+  </main>
+  <%- include('../components/footer'); -%>
+</body>
+
+</html>
