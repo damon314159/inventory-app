@@ -10,7 +10,7 @@ import type { ValidationChain } from 'express-validator'
 const id = (location = body, field = 'id'): ValidationChain =>
   location(field)
     .escape()
-    .exists({ checkFalsy: true, checkNull: true })
+    .exists({ values: 'falsy' })
     .withMessage('ID must be provided')
     .isInt({ gt: 0 })
     .withMessage('ID must be an integer greater than 0')
