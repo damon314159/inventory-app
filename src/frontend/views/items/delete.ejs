@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<%- include('../components/head'); -%>
+
+<body>
+  <%- include('../components/header'); -%>
+  <main class="delete-item">
+    <section class="form-section">
+      <div class="container">
+        <% if (locals.success) { %>
+        <div class="success-message">
+          <h1>Item Deleted Successfully!</h1>
+          <p>Your item has been deleted. You can go back to the <a href="/items" class="link link-primary">items list</a>.</p>
+          <a href="/items" class="btn btn-primary">Back to Items</a>
+        </div>
+        <% } else { %>
+        <h1>Delete Item</h1>
+        <form action="/items/delete/<%= locals.id ?? -1 %>?_method=delete" method="POST" class="delete-form">
+          <p>Are you sure you want to delete the item "<%= locals.name %>"?</p>
+          <div class="button-panel">
+            <button type="submit" class="btn btn-danger">Delete Item</button>
+            <a href="/items" class="btn btn-secondary">Cancel</a>
+          </div>
+        </form>
+        <% } %>
+      </div>
+    </section>
+  </main>
+  <%- include('../components/footer'); -%>
+</body>
+
+</html>
