@@ -37,7 +37,7 @@
         <% items.forEach(function(item) { %>
         <div class="item">
           <h3><%= item.name %></h3>
-          <p><%= item.description %></p>
+          <p class="description"><%= item.description %></p>
           <p>Stock: <%= item.stock %></p>
           <p>Price: £<%= (item.price / 100).toFixed(2) %></p>
           <p>Category: <%= item.categoryName %></p>
