@@ -42,8 +42,10 @@
     margin: 0;
   }
   p {
-    flex: 1 0 auto;
     margin: 0;
+  }
+  .description {
+    flex: 1 0 auto;
   }
   .actions {
     gap: 0.5rem;
