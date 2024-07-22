@@ -171,13 +171,18 @@ const getUpdateItem: RequestHandler = async (
 
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      res.render('items/edit', { errors: errors.array(), id })
+      res.render('items/edit', {
+        categories: await categoryService.readCategories({}),
+        errors: errors.array(),
+        id,
+      })
       return
     }
 
     const item = await itemService.readItem({ id: Number(id) })
     if (!item) {
       res.render('items/edit', {
+        categories: await categoryService.readCategories({}),
         errors: [new Error('No item found with this ID')],
         id,
       })
@@ -186,6 +191,7 @@ const getUpdateItem: RequestHandler = async (
     const { categoryId, description, name, price, stock } = item
 
     res.render('items/edit', {
+      categories: await categoryService.readCategories({}),
       formData: {
         categoryId: categoryId ? Number(categoryId) : undefined,
         description,
@@ -212,6 +218,7 @@ const updateItem: RequestHandler = async (
     const errors = validationResult(req)
     if (errors.mapped().id) {
       res.render('items/edit', {
+        categories: await categoryService.readCategories({}),
         errors: [errors.mapped().id],
         formData: {
           categoryId: categoryId ? Number(categoryId) : undefined,
@@ -228,6 +235,7 @@ const updateItem: RequestHandler = async (
     const item = await itemService.readItem({ id: Number(id) })
     if (!item) {
       res.render('items/edit', {
+        categories: await categoryService.readCategories({}),
         errors: [new Error('No item found with this ID')],
         id,
       })
@@ -236,6 +244,7 @@ const updateItem: RequestHandler = async (
 
     if (!errors.isEmpty()) {
       res.render('items/edit', {
+        categories: await categoryService.readCategories({}),
         errors: errors.array(),
         formData: {
           categoryId: categoryId ? Number(categoryId) : undefined,
@@ -251,7 +260,13 @@ const updateItem: RequestHandler = async (
     }
 
     await itemService.updateItem({
-      data: { categoryId, description, name, price, stock },
+      data: {
+        categoryId: categoryId ? Number(categoryId) : undefined,
+        description,
+        name,
+        price: price ? Number(price) * 100 : undefined,
+        stock: stock ? Number(stock) : undefined,
+      },
       id: Number(id),
     })
     res.render('items/edit', { success: true })
